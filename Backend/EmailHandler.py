@@ -10,8 +10,8 @@ smtp_ssl_port = 465
 username = 'username@gmail.com'
 password = 'password'
 
-from_addr = 'mohamed204798@gmail.com'
-to_addrs = ['marwaataya657@gmail.com']
+from_addr = 'username@gmail.com'
+to_addrs = ['detsname@gmail.com']
 
 # the email lib has a lot of templates
 # for different message formats,
