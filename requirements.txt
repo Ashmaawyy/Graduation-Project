@@ -1,2 +1,5 @@
 stmplib
 email
+pydrive
+xlrd
+openpyxl
