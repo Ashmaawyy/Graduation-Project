@@ -19,4 +19,4 @@ file_obj.GetContentFile('FILE_NAME.xls',
 		mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 dataframe = pd.read_excel('FILE_NAME.xls')
-print(dataframe)
+print(dataframe.head(10))
