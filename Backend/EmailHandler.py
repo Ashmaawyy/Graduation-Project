@@ -53,9 +53,7 @@ def get_body(msg):
 # Function to search for a key value pair
 def search(key, value):
 
-    con = connect_to_imap_server()
-
-    result, data = con.search(None, key, '"{}"'.format(value))
+    result, data = mail.search(None, key, '"{}"'.format(value))
     return data
 
 # Function to get the list of emails under this label
@@ -63,7 +61,7 @@ def get_emails(result_bytes):
 
     msgs = [] # all the email data are pushed inside an array
     for num in result_bytes[0].split():
-        typ, data = con.fetch(num, '(RFC822)')
+        typ, data = mail.fetch(num, '(RFC822)')
         msgs.append(data)
  
     return msgs
