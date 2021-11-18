@@ -2,7 +2,7 @@ from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 import pandas as pd
 
-def ReadFormResponse():
+def read_form_response():
 	
 	# Initializing a GoogleAuth Object
 	gauth = GoogleAuth()
@@ -20,5 +20,5 @@ def ReadFormResponse():
 	file_obj.GetContentFile('FILE_NAME.xls',
 			mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
-	dataframe = pd.read_excel('FILE_NAME.xls')
-	print(dataframe.head(10))
+	Form_Excel = pd.read_excel('FILE_NAME.xls')
+	return Form_Excel
