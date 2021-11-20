@@ -1,10 +1,15 @@
 import smtplib
+from pathlib import Path
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
-from datetime import date
+from email.utils import COMMASPACE, formatdate
+from email import encoders
+import datetime
 import email
 import imaplib
 
-def connect_to_ssl_server():
+def connect_to_ssl_server(from_addr, to_addrs, message):
      # connect with Google's servers
     smtp_ssl_host = 'smtp.gmail.com'
     smtp_ssl_port = 465
@@ -21,14 +26,31 @@ def connect_to_ssl_server():
     server.sendmail(from_addr, to_addrs, message.as_string())
     server.quit()
 
-def send_email(subject, from_addr, to_addrs, filename = ''):
+def send_email(subject, from_addr, to_addrs, filesnames = []):
 
     message = MIMEText('This Message is sent to you from The QC System :)' + datetime.now())
     message['subject'] = subject 
     message['from'] = from_addr
-    message['to'] = ', '.join(to_addrs)
+    message['to'] = COMMASPACE.join(to_addrs)
 
-    connect_to_ssl_server()
+    if filesnames != []:
+        msg = MIMEMultipart()
+        msg['From'] = from_addr
+        msg['To'] = COMMASPACE.join(to_addrs)
+        msg['Date'] = formatdate(localtime = True)
+        msg['Subject'] = subject
+        message.attach(MIMEText(message))
+
+        for path in filesnames:
+            part = MIMEBase('application', "octet-stream")
+            with open(path, 'rb') as file:
+                part.set_payload(file.read())
+            encoders.encode_base64(part)
+            part.add_header('Content-Disposition',
+                            'attachment; filename={}'.format(Path(path).name))
+            message.attach(part)
+
+    connect_to_ssl_server(from_addr, to_addrs, message)
 
 def connect_to_imap_server():
 
@@ -51,13 +73,13 @@ def get_body(msg):
         return msg.get_payload(None, True)
 
 # Function to search for a key value pair
-def search(key, value):
+def search(key, value, mail):
 
     result, data = mail.search(None, key, '"{}"'.format(value))
     return data
 
 # Function to get the list of emails under this label
-def get_emails(result_bytes):
+def get_emails(result_bytes, mail):
 
     msgs = [] # all the email data are pushed inside an array
     for num in result_bytes[0].split():
@@ -69,7 +91,7 @@ def get_emails(result_bytes):
 def recieve_email():
 
     mail = connect_to_imap_server()
-    msgs = get_emails(search('FROM', 'ANOTHER_GMAIL_ADDRESS'))
+    msgs = get_emails(search('FROM', 'ANOTHER_GMAIL_ADDRESS', mail), mail)
     
 def clean_bloated_mailbox():
 
