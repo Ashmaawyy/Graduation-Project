@@ -71,17 +71,11 @@ def recieve_email():
     mail = connect_to_imap_server()
     msgs = get_emails(search('FROM', 'ANOTHER_GMAIL_ADDRESS'))
     
-
 def clean_bloated_mailbox():
 
     imaplib._MAXLINE = 1000000
 
-    EMAIL = 'mymail@gmail.com'
-    PASSWORD = 'password'
-    SERVER = 'imap.gmail.com'
-
-    mail = imaplib.IMAP4_SSL(SERVER)
-    mail.login(EMAIL, PASSWORD)
+    mail = connect_to_imap_server()
     # select the box you want to clean
     mail.select('bloated_box')
 
