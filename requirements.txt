@@ -3,3 +3,4 @@ email
 pydrive
 xlrd
 openpyxl
+os
