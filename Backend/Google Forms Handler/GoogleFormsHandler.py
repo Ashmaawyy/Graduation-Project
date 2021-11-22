@@ -10,7 +10,7 @@ def drive_access():
 	# client_secrets.json file is verified
 	# and it automatically handles authentication
 	gauth.LoadCredentialsFile("creds.txt")
-	
+
 	if gauth.credentials is None:
     	# Authenticate if they're not there
 		GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = os.getcwd() + '\Backend\Google Forms Handler\client_secrets.json'
@@ -35,7 +35,7 @@ def read_form_response():
 	
 	drive = drive_access()
 	# Initialize GoogleDriveFile instance with file id
-	file_obj = drive.CreateFile({'id': '154N9rY_gy8uK6unUbFi_VGQnDnFfEatsiqjZslCftyo'})
+	file_obj = drive.CreateFile({'id': '1B7d0Ds_amgNwf8DjkmKZFQK9RCPn6zNZxQ8W2VnSOz0'})
 	file_obj.GetContentFile('Test.xls',
 			mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
