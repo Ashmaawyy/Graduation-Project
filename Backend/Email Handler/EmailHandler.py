@@ -8,6 +8,7 @@ from email import encoders
 import datetime
 import email
 import imaplib
+import os
 
 def connect_to_ssl_server(from_addr, to_addrs, message):
      # connect with Google's servers
@@ -15,30 +16,29 @@ def connect_to_ssl_server(from_addr, to_addrs, message):
     smtp_ssl_port = 465
 
     # use username or email to log in
-    username = 'username@gmail.com'
-    password = 'password'
+    username = 'mohamed204798@gmail.com'
+    password = 'kerwnobnjdxkroah'
 
     server = smtplib.SMTP_SSL(smtp_ssl_host, smtp_ssl_port)
     # to interact with the server, first we log in
-    server.starttls() # Enable Security
     server.login(username, password)
     # and then we send the message
     server.sendmail(from_addr, to_addrs, message.as_string())
     server.quit()
 
-def send_email(subject, from_addr, to_addrs, filesnames = []):
+def send_email(subject = '', from_addr = '', to_addrs = [], filesnames = []):
 
-    message = MIMEText('This Message is sent to you from The QC System :)' + datetime.now())
+    message = MIMEText('This Message is sent to you from The QC System :)')
     message['subject'] = subject 
     message['from'] = from_addr
     message['to'] = COMMASPACE.join(to_addrs)
 
     if filesnames != []:
-        msg = MIMEMultipart()
-        msg['From'] = from_addr
-        msg['To'] = COMMASPACE.join(to_addrs)
-        msg['Date'] = formatdate(localtime = True)
-        msg['Subject'] = subject
+        message = MIMEMultipart()
+        message['From'] = from_addr
+        message['To'] = COMMASPACE.join(to_addrs)
+        message['Date'] = formatdate(localtime = True)
+        message['Subject'] = subject
         message.attach(MIMEText(message))
 
         for path in filesnames:
@@ -132,3 +132,4 @@ def clean_bloated_mailbox():
     mail.logout()
 
 
+send_email('Testing' ,'mohamed204798@gmail.com', ['mona.arafat71@gmail.com'], ['Test.xls'])
