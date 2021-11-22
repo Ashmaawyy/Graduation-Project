@@ -10,6 +10,36 @@ import email
 import imaplib
 import os
 
+def send_email(subject = '', from_addr = '', to_addrs = [], filesnames = []):
+
+    message = MIMEText('This Message is sent to you from The QC System :)')
+    message['subject'] = subject 
+    message['from'] = from_addr
+    message['to'] = COMMASPACE.join(to_addrs)
+
+    if filesnames != []:
+        attach_file(subject , from_addr, to_addrs, filesnames)
+
+    connect_to_ssl_server(from_addr, to_addrs, message)
+
+def attach_file(subject = '', from_addr = '', to_addrs = [], filesnames = []):
+
+    message = MIMEMultipart()
+    message['From'] = from_addr
+    message['To'] = COMMASPACE.join(to_addrs)
+    message['Date'] = formatdate(localtime = True)
+    message['Subject'] = subject
+    message.attach(MIMEText(message))
+
+    for path in filesnames:
+        part = MIMEBase('application', "octet-stream")
+        with open(path, 'rb') as file:
+            part.set_payload(file.read())
+        encoders.encode_base64(part)
+        part.add_header('Content-Disposition',
+                        'attachment; filename={}'.format(Path(path).name))
+        message.attach(part)
+
 def connect_to_ssl_server(from_addr, to_addrs, message):
      # connect with Google's servers
     smtp_ssl_host = 'smtp.gmail.com'
@@ -25,32 +55,6 @@ def connect_to_ssl_server(from_addr, to_addrs, message):
     # and then we send the message
     server.sendmail(from_addr, to_addrs, message.as_string())
     server.quit()
-
-def send_email(subject = '', from_addr = '', to_addrs = [], filesnames = []):
-
-    message = MIMEText('This Message is sent to you from The QC System :)')
-    message['subject'] = subject 
-    message['from'] = from_addr
-    message['to'] = COMMASPACE.join(to_addrs)
-
-    if filesnames != []:
-        message = MIMEMultipart()
-        message['From'] = from_addr
-        message['To'] = COMMASPACE.join(to_addrs)
-        message['Date'] = formatdate(localtime = True)
-        message['Subject'] = subject
-        message.attach(MIMEText(message))
-
-        for path in filesnames:
-            part = MIMEBase('application', "octet-stream")
-            with open(path, 'rb') as file:
-                part.set_payload(file.read())
-            encoders.encode_base64(part)
-            part.add_header('Content-Disposition',
-                            'attachment; filename={}'.format(Path(path).name))
-            message.attach(part)
-
-    connect_to_ssl_server(from_addr, to_addrs, message)
 
 def connect_to_imap_server():
 
