@@ -18,11 +18,11 @@ def send_email(subject = '', from_addr = '', to_addrs = [], filesnames = []):
     message['to'] = COMMASPACE.join(to_addrs)
 
     if filesnames != []:
-        attach_file(subject , from_addr, to_addrs, filesnames)
+        attach_files(subject , from_addr, to_addrs, filesnames)
 
     connect_to_ssl_server(from_addr, to_addrs, message)
 
-def attach_file(subject = '', from_addr = '', to_addrs = [], filesnames = []):
+def attach_files(subject = '', from_addr = '', to_addrs = [], filesnames = []):
 
     message = MIMEMultipart()
     message['From'] = from_addr
