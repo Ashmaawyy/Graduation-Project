@@ -22,7 +22,7 @@ def send_email(subject = '', from_addr = '', to_addrs = [], filesnames = []):
 
     connect_to_ssl_server(from_addr, to_addrs, message)
 
-def attach_files(subject = '', from_addr = '', to_addrs = [], filesnames = []):
+def attach_files(subject , from_addr, to_addrs, filesnames):
 
     message = MIMEMultipart()
     message['From'] = from_addr
