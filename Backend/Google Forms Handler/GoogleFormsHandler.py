@@ -3,7 +3,7 @@ from pydrive.drive import GoogleDrive
 import pandas as pd
 import os
 
-def drive_access():
+def access_drive():
 	# Initializing a GoogleAuth Object
 	gauth = GoogleAuth()
 
@@ -29,11 +29,10 @@ def drive_access():
 	drive = GoogleDrive(gauth)
 	return drive
 
-
 def read_form_response():
 	
 	
-	drive = drive_access()
+	drive = access_drive()
 	# Initialize GoogleDriveFile instance with file id
 	file_obj = drive.CreateFile({'id': '1B7d0Ds_amgNwf8DjkmKZFQK9RCPn6zNZxQ8W2VnSOz0'})
 	file_obj.GetContentFile('Test.xls',
@@ -41,5 +40,3 @@ def read_form_response():
 
 	Form_Excel = pd.read_excel('Test.xls')
 	return Form_Excel
-
-print(read_form_response())
