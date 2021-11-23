@@ -48,8 +48,8 @@ def connect_to_ssl_server(from_addr, to_addrs, message):
     smtp_ssl_port = 465
 
     # use username or email to log in
-    username = 'mohamed204798@gmail.com'
-    password = 'kerwnobnjdxkroah'
+    username = 'user@gmail.com'
+    password = '****************'
 
     server = smtplib.SMTP_SSL(smtp_ssl_host, smtp_ssl_port)
     # to interact with the server, first we log in
@@ -58,10 +58,24 @@ def connect_to_ssl_server(from_addr, to_addrs, message):
     server.sendmail(from_addr, to_addrs, message.as_string())
     server.quit()
 
+def recieve_emails_into_df():
+
+    try:
+        mail = connect_to_imap_server()
+        latest_email_id, first_email_id = get_email_ids(mail)
+        messages_df = pd.DataFrame.from_dict(create_messages_dict(latest_email_id, first_email_id, mail), orient = 'columns')
+        print('Messages saved to dataframe successfully :)')
+
+        return messages_df
+            
+    except Exception as e:
+        traceback.print_exc() 
+        print(str(e))
+
 def connect_to_imap_server():
 
-    EMAIL = 'mohamed204798@gmail.com'
-    PASSWORD = 'kerwnobnjdxkroah'
+    EMAIL = 'user@gmail.com'
+    PASSWORD = '**************'
     SERVER = 'imap.gmail.com'
 
     # connect to the server and go to its inbox
@@ -102,16 +116,3 @@ def get_email_ids(mail):
 
     return latest_email_id, first_email_id
 
-def recieve_emails_into_df():
-
-    try:
-        mail = connect_to_imap_server()
-        latest_email_id, first_email_id = get_email_ids(mail)
-        messages_df = pd.DataFrame.from_dict(create_messages_dict(latest_email_id, first_email_id, mail), orient = 'columns')
-        print('Messages saved to dataframe successfully :)')
-
-        return messages_df
-            
-    except Exception as e:
-        traceback.print_exc() 
-        print(str(e))
