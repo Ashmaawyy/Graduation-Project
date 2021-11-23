@@ -9,6 +9,8 @@ import datetime
 import email
 import imaplib
 import os
+import traceback
+import pandas as pd
 
 def send_email(subject = '', from_addr = '', to_addrs = [], filesnames = []):
 
@@ -58,8 +60,8 @@ def connect_to_ssl_server(from_addr, to_addrs, message):
 
 def connect_to_imap_server():
 
-    EMAIL = 'mymail@mail.com'
-    PASSWORD = 'password'
+    EMAIL = 'mohamed204798@gmail.com'
+    PASSWORD = 'kerwnobnjdxkroah'
     SERVER = 'imap.gmail.com'
 
     # connect to the server and go to its inbox
@@ -69,71 +71,47 @@ def connect_to_imap_server():
     return mail
 
 # Function to extract body-part of mail   
-def get_body(msg):
+def get_body(email_contents):
 
-    if msg.is_multipart():
-        return get_body(msg.get_payload(0))
-    else:
-        return msg.get_payload(None, True)
+    message = email.message_from_string(email_contents)
+    for payload in message.get_payload():
+        return payload.get_payload()
 
-# Function to search for a key value pair
-def search(key, value, mail):
+def create_messages_dict(latest_email_id, first_email_id, mail):
 
-    result, data = mail.search(None, key, '"{}"'.format(value))
-    return data
+    messages_dict = {'Subject': [], 'From': []}
 
-# Function to get the list of emails under this label
-def get_emails(result_bytes, mail):
+    for i in range(latest_email_id, first_email_id, -1):
+        data = mail.fetch(str(i), '(RFC822)' )
+        for response_part in data:
+            arr = response_part[0]
+            if isinstance(arr, tuple):
+                msg = email.message_from_string(str(arr[1],'utf-8'))
+                messages_dict['Subject'].append(msg['subject'])
+                messages_dict['From'].append(msg['from'])
+                #messages_dict['Body'].append(get_body(msg))
+    return messages_dict
 
-    msgs = [] # all the email data are pushed inside an array
-    for num in result_bytes[0].split():
-        typ, data = mail.fetch(num, '(RFC822)')
-        msgs.append(data)
- 
-    return msgs
+def get_email_ids(mail):
 
-def recieve_email():
+    data = mail.search(None, 'SENTON 23-Nov-2021')
+    mail_ids = data[1]
+    id_list = mail_ids[0].split()   
+    first_email_id = int(id_list[0])
+    latest_email_id = int(id_list[-1])
 
-    mail = connect_to_imap_server()
-    msgs = get_emails(search('FROM', 'ANOTHER_GMAIL_ADDRESS', mail), mail)
-    
-def clean_bloated_mailbox():
+    return latest_email_id, first_email_id
 
-    imaplib._MAXLINE = 1000000
+def recieve_emails_into_df():
 
-    mail = connect_to_imap_server()
-    # select the box you want to clean
-    mail.select('bloated_box')
+    try:
+        mail = connect_to_imap_server()
+        latest_email_id, first_email_id = get_email_ids(mail)
+        messages_df = pd.DataFrame.from_dict(create_messages_dict(latest_email_id, first_email_id, mail), orient = 'columns')
+        print('Messages saved to dataframe successfully :)')
 
-    status, search_data = mail.search(None, 'ALL')
-
-    mail_ids = []
-
-    for block in search_data:
-        mail_ids += block.split()
-
-    # define the range for the operation
-    start = mail_ids[0].decode()
-    end = mail_ids[-1].decode()
-
-    # move the emails to the trash
-    # this step is Gmail specific because
-    # it doesn't allow excluding messages
-    # outside the trash
-    mail.store(f'{start}:{end}'.encode(), '+X-GM-LABELS', '\\Trash')
-
-    # access the Gmail trash
-    mail.select('[Gmail]/Trash')
-    # mark the emails to be deleted
-    mail.store("1:*", '+FLAGS', '\\Deleted')
-
-    # remove permanently the emails
-    mail.expunge()
-
-    # close the mailboxes
-    mail.close()
-    # close the connection
-    mail.logout()
-
-
-send_email('Testing' ,'mohamed204798@gmail.com', ['mona.arafat71@gmail.com'], ['Test.xls'])
+        return messages_df
+            
+    except Exception as e:
+        traceback.print_exc() 
+        print(str(e))
