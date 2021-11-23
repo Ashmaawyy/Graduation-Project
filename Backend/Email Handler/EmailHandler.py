@@ -84,13 +84,16 @@ def connect_to_imap_server():
     mail.select('Inbox')
     return mail
 
-# Function to extract body-part of mail   
-def get_body(email_contents):
+def get_email_ids(mail):
 
-    message = email.message_from_string(email_contents)
-    for payload in message.get_payload():
-        return payload.get_payload()
+    data = mail.search(None, 'SENTON 23-Nov-2021')
+    mail_ids = data[1]
+    id_list = mail_ids[0].split()   
+    first_email_id = int(id_list[0])
+    latest_email_id = int(id_list[-1])
 
+    return latest_email_id, first_email_id
+   
 def create_messages_dict(latest_email_id, first_email_id, mail):
 
     messages_dict = {'Subject': [], 'From': []}
@@ -106,13 +109,8 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
                 #messages_dict['Body'].append(get_body(msg))
     return messages_dict
 
-def get_email_ids(mail):
+def get_body(email_contents):
 
-    data = mail.search(None, 'SENTON 23-Nov-2021')
-    mail_ids = data[1]
-    id_list = mail_ids[0].split()   
-    first_email_id = int(id_list[0])
-    latest_email_id = int(id_list[-1])
-
-    return latest_email_id, first_email_id
-
+    message = email.message_from_string(email_contents)
+    for payload in message.get_payload():
+        return payload.get_payload()
