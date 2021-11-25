@@ -12,7 +12,7 @@ import os
 import traceback
 import pandas as pd
 
-def send_email(subject = '', from_addr = '', to_addrs = [], filesnames = []):
+def send_email(subject, from_addr, to_addrs, filesnames):
     message = MIMEText('This Message is sent to you from The QC System :)')
     message['subject'] = subject 
     message['from'] = from_addr
