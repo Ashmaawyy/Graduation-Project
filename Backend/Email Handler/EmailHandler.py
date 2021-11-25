@@ -13,7 +13,6 @@ import traceback
 import pandas as pd
 
 def send_email(subject = '', from_addr = '', to_addrs = [], filesnames = []):
-
     message = MIMEText('This Message is sent to you from The QC System :)')
     message['subject'] = subject 
     message['from'] = from_addr
@@ -25,7 +24,6 @@ def send_email(subject = '', from_addr = '', to_addrs = [], filesnames = []):
     connect_to_ssl_server(from_addr, to_addrs, message)
 
 def attach_files(subject , from_addr, to_addrs, filesnames):
-
     message = MIMEMultipart()
     message['From'] = from_addr
     message['To'] = COMMASPACE.join(to_addrs)
@@ -59,7 +57,6 @@ def connect_to_ssl_server(from_addr, to_addrs, message):
     server.quit()
 
 def recieve_emails_into_df():
-
     try:
         mail = connect_to_imap_server()
         latest_email_id, first_email_id = get_email_ids(mail)
@@ -73,7 +70,6 @@ def recieve_emails_into_df():
         print(str(e))
 
 def connect_to_imap_server():
-
     EMAIL = 'user@gmail.com'
     PASSWORD = '**************'
     SERVER = 'imap.gmail.com'
@@ -85,7 +81,6 @@ def connect_to_imap_server():
     return mail
 
 def get_email_ids(mail):
-
     data = mail.search(None, 'SENTON 23-Nov-2021')
     mail_ids = data[1]
     id_list = mail_ids[0].split()   
@@ -95,7 +90,6 @@ def get_email_ids(mail):
     return latest_email_id, first_email_id
    
 def create_messages_dict(latest_email_id, first_email_id, mail):
-
     messages_dict = {'Subject': [], 'From': []}
 
     for i in range(latest_email_id, first_email_id, -1):
@@ -110,7 +104,6 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
     return messages_dict
 
 def get_body(email_contents):
-
     message = email.message_from_string(email_contents)
     for payload in message.get_payload():
         return payload.get_payload()
