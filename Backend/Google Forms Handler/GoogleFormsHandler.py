@@ -24,19 +24,16 @@ def access_drive():
 	
 	gauth.SaveCredentialsFile("creds.txt")
 
-	# GoogleDrive Instance is created using
-	# authenticated GoogleAuth instance
+	# GoogleDrive Instance is created using authenticated GoogleAuth instance
 	drive = GoogleDrive(gauth)
 	return drive
 
 def read_form_response():
-	
-	
 	drive = access_drive()
 	# Initialize GoogleDriveFile instance with file id
 	file_obj = drive.CreateFile({'id': '1B7d0Ds_amgNwf8DjkmKZFQK9RCPn6zNZxQ8W2VnSOz0'})
 	file_obj.GetContentFile('Test.xls',
 			mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
-	Form_Excel = pd.read_excel('Test.xls')
-	return Form_Excel
+	form_excel = pd.read_excel('Test.xls')
+	return form_excel
