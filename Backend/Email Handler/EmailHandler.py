@@ -5,7 +5,6 @@ from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
 from email import encoders
-import datetime
 import email
 import imaplib
 import os
@@ -104,6 +103,10 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
     return messages_dict
 
 def get_body(email_contents):
+    '''
+    arguments: email_contents -> type: IMAP e-mail object
+    gets the body of an e-mail
+    '''
     message = email.message_from_string(email_contents)
     for payload in message.get_payload():
         return payload.get_payload()
