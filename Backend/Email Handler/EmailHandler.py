@@ -7,7 +7,6 @@ from email.utils import COMMASPACE, formatdate
 from email import encoders
 import email
 import imaplib
-import os
 import traceback
 import pandas as pd
 
@@ -65,8 +64,8 @@ def recieve_emails_into_df():
         return messages_df
             
     except Exception as e:
-        traceback.print_exc() 
-        print(str(e))
+        traceback.print_exc()
+        return str(e)
 
 def connect_to_imap_server():
     EMAIL = 'user@gmail.com'
