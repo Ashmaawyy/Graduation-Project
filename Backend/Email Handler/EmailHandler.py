@@ -1,4 +1,7 @@
-import smtplib
+# pylint: disable=invalid-name
+# pylint: disable=broad-except
+# pylint: disable=missing-module-dockstring
+import smtplib # To handle e-mail send-recieve protocols
 from pathlib import Path
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
@@ -11,6 +14,9 @@ import traceback
 import pandas as pd
 
 def send_email(subject, from_addr, to_addrs, filesnames):
+    """
+    Sends e-mails
+    """
     message = MIMEText('This Message is sent to you from The QC System :)')
     message['subject'] = subject 
     message['from'] = from_addr
@@ -22,6 +28,9 @@ def send_email(subject, from_addr, to_addrs, filesnames):
     connect_to_ssl_server(from_addr, to_addrs, message)
 
 def attach_files(subject , from_addr, to_addrs, filesnames):
+    """
+    Attaches files for outgoing e-mails
+    """
     message = MIMEMultipart()
     message['From'] = from_addr
     message['To'] = COMMASPACE.join(to_addrs)
@@ -39,6 +48,9 @@ def attach_files(subject , from_addr, to_addrs, filesnames):
         message.attach(part)
 
 def connect_to_ssl_server(from_addr, to_addrs, message):
+    """
+    Handels e-mail sending protocols
+    """
      # connect with Google's servers
     smtp_ssl_host = 'smtp.gmail.com'
     smtp_ssl_port = 465
@@ -55,39 +67,51 @@ def connect_to_ssl_server(from_addr, to_addrs, message):
     server.quit()
 
 def recieve_emails_into_df():
+    """
+    Recieves and saves messages into a pandas dataframe for analysis
+    """
     try:
         mail = connect_to_imap_server()
         latest_email_id, first_email_id = get_email_ids(mail)
-        messages_df = pd.DataFrame.from_dict(create_messages_dict(latest_email_id, first_email_id, mail), orient = 'columns')
+        messages_df = pd.DataFrame.from_dict(
+            create_messages_dict(latest_email_id, first_email_id, mail), orient = 'columns')
         print('Messages saved to dataframe successfully :)')
 
         return messages_df
-            
     except Exception as e:
         traceback.print_exc()
         return str(e)
 
 def connect_to_imap_server():
-    EMAIL = 'user@gmail.com'
-    PASSWORD = '**************'
-    SERVER = 'imap.gmail.com'
+    """
+    Handles recieve protocols
+    """
+    username = 'user@gmail.com'
+    password = '**************'
+    server = 'imap.gmail.com'
 
     # connect to the server and go to its inbox
-    mail = imaplib.IMAP4_SSL(SERVER)
-    mail.login(EMAIL, PASSWORD)
+    mail = imaplib.IMAP4_SSL(server)
+    mail.login(username, password)
     mail.select('Inbox')
     return mail
 
 def get_email_ids(mail):
+    """
+    Returns e-mail id's to determin lengh of list to search within
+    """
     data = mail.search(None, 'SENTON 23-Nov-2021')
     mail_ids = data[1]
-    id_list = mail_ids[0].split()   
+    id_list = mail_ids[0].split()
     first_email_id = int(id_list[0])
     latest_email_id = int(id_list[-1])
 
     return latest_email_id, first_email_id
-   
+
 def create_messages_dict(latest_email_id, first_email_id, mail):
+    """
+    Creates messages dictionary in order to be made into a dataframe
+    """
     messages_dict = {'Subject': [], 'From': []}
 
     for i in range(latest_email_id, first_email_id, -1):
