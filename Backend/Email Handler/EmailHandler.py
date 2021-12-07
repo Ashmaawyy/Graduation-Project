@@ -1,6 +1,6 @@
 # pylint: disable=invalid-name
 # pylint: disable=broad-except
-# pylint: disable=missing-module-dockstring
+# pylint: disable=missing-module-docstring
 import smtplib # To handle e-mail send-recieve protocols
 from pathlib import Path
 from email.mime.multipart import MIMEMultipart
