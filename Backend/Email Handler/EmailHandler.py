@@ -21,7 +21,8 @@ def send_email(subject, from_addr, to_addrs, files_names):
     to_addrs -> []
     filesnames -> []
     """
-    message = MIMEText('This Message is sent to you from The QC System :)')
+    message = MIMEText('''This Message is sent to you by the QC System :)
+    \n Sincerly, \n Ashmawy ©''')
     message['subject'] = subject
     message['from'] = from_addr
     message['to'] = COMMASPACE.join(to_addrs)
@@ -45,7 +46,8 @@ def attach_files(subject , from_addr, to_addrs, files_names):
     message_attached['To'] = COMMASPACE.join(to_addrs)
     message_attached['Date'] = formatdate(localtime = True)
     message_attached['Subject'] = subject
-    message_attached.attach(MIMEText('This Message is sent to you by the QC System :) \n Sincerly, \n Ashmawy'))
+    message_attached.attach(MIMEText('''This Message is sent to you by the QC System :)
+    \n Sincerly, \n Ashmawy ©'''))
 
     for path in files_names:
         part = MIMEBase('application', "octet-stream")
