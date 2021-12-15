@@ -69,8 +69,8 @@ def connect_to_ssl_server(from_addr, to_addrs, message):
     smtp_ssl_port = 465
 
     # use username or email to log in
-    username = 'mohamed204798@gmail.com'
-    password = 'ihtrsnrayhnooqdq'
+    username = 'user@gmail.com'
+    password = '**************'
 
     server = smtplib.SMTP_SSL(smtp_ssl_host, smtp_ssl_port)
     # to interact with the server, first we log in
@@ -150,6 +150,3 @@ def get_body(email_contents):
     message = email.message_from_string(email_contents)
     for payload in message.get_payload():
         return payload.get_payload()
-
-
-send_email('Testing Multi Files','mohamed204798@gmail.com',['mohamed.alashmaawy@gmail.com'],['test.txt', 'requirements.txt'])
