@@ -28,10 +28,9 @@ def send_email(subject, from_addr, to_addrs, files_names):
     message['to'] = COMMASPACE.join(to_addrs)
 
     if files_names != []:
-        message_attached = attach_files(subject , from_addr, to_addrs, files_names)
-        connect_to_ssl_server(from_addr, to_addrs, message_attached)
-    else:
-        connect_to_ssl_server(from_addr, to_addrs, message)
+        message = attach_files(subject , from_addr, to_addrs, files_names)
+
+    connect_to_ssl_server(from_addr, to_addrs, message)
 
 def attach_files(subject , from_addr, to_addrs, files_names):
     """
