@@ -27,7 +27,8 @@ def send_email(subject, from_addr, to_addrs, files_names):
     message['to'] = COMMASPACE.join(to_addrs)
 
     if files_names != []:
-        attach_files(subject , from_addr, to_addrs, files_names)
+        message_attached = attach_files(subject , from_addr, to_addrs, files_names)
+        connect_to_ssl_server(from_addr, to_addrs, message_attached)
 
     connect_to_ssl_server(from_addr, to_addrs, message)
 
@@ -39,21 +40,22 @@ def attach_files(subject , from_addr, to_addrs, files_names):
     to_addrs -> []
     filesnames -> []
     """
-    message = MIMEMultipart()
-    message['From'] = from_addr
-    message['To'] = COMMASPACE.join(to_addrs)
-    message['Date'] = formatdate(localtime = True)
-    message['Subject'] = subject
-    message.attach(MIMEText(message))
+    message_attached = MIMEMultipart()
+    message_attached['From'] = from_addr
+    message_attached['To'] = COMMASPACE.join(to_addrs)
+    message_attached['Date'] = formatdate(localtime = True)
+    message_attached['Subject'] = subject
+    message_attached.attach(MIMEText('This Message is sent to you by the QC System :)'))
 
     for path in files_names:
         part = MIMEBase('application', "octet-stream")
-        with open(path, 'rb') as file:
+        with open(path, 'r') as file:
             part.set_payload(file.read())
         encoders.encode_base64(part)
         part.add_header('Content-Disposition',
                         'attachment; filename={}'.format(Path(path).name))
-        message.attach(part)
+        message_attached.attach(part)
+    return message_attached
 
 def connect_to_ssl_server(from_addr, to_addrs, message):
     """
@@ -67,8 +69,8 @@ def connect_to_ssl_server(from_addr, to_addrs, message):
     smtp_ssl_port = 465
 
     # use username or email to log in
-    username = 'user@gmail.com'
-    password = '****************'
+    username = 'mohamed204798@gmail.com'
+    password = 'ihtrsnrayhnooqdq'
 
     server = smtplib.SMTP_SSL(smtp_ssl_host, smtp_ssl_port)
     # to interact with the server, first we log in
@@ -148,3 +150,6 @@ def get_body(email_contents):
     message = email.message_from_string(email_contents)
     for payload in message.get_payload():
         return payload.get_payload()
+
+
+send_email('Testing Multi Files','mohamed204798@gmail.com',['mohamed.alashmaawy@gmail.com'],['test.txt', 'requirements.txt'])
