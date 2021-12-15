@@ -90,7 +90,7 @@ def recieve_emails_into_df():
         latest_email_id, first_email_id = get_email_ids(mail)
         messages_df = pd.DataFrame.from_dict(
             create_messages_dict(latest_email_id, first_email_id, mail), orient = 'columns')
-        print('Messages saved to dataframe successfully :)')
+        print('Messages saved into a dataframe successfully :)')
 
         return messages_df
     except Exception as e:
