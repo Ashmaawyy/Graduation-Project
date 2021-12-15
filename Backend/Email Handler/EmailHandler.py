@@ -98,7 +98,7 @@ def recieve_emails_into_df():
 
 def connect_to_imap_server():
     """
-    Handles recieve protocols
+    Handles recieve protocols, returns mail -> IMAP object
     """
     username = 'user@gmail.com'
     password = '**************'
