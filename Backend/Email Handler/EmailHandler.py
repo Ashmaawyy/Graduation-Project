@@ -13,23 +13,31 @@ import imaplib
 import traceback
 import pandas as pd
 
-def send_email(subject, from_addr, to_addrs, filesnames):
+def send_email(subject, from_addr, to_addrs, files_names):
     """
     Sends e-mails
+    subject -> str
+    from_addr -> str
+    to_addrs -> []
+    filesnames -> []
     """
     message = MIMEText('This Message is sent to you from The QC System :)')
-    message['subject'] = subject 
+    message['subject'] = subject
     message['from'] = from_addr
     message['to'] = COMMASPACE.join(to_addrs)
 
-    if filesnames != []:
-        attach_files(subject , from_addr, to_addrs, filesnames)
+    if files_names != []:
+        attach_files(subject , from_addr, to_addrs, files_names)
 
     connect_to_ssl_server(from_addr, to_addrs, message)
 
-def attach_files(subject , from_addr, to_addrs, filesnames):
+def attach_files(subject , from_addr, to_addrs, files_names):
     """
     Attaches files for outgoing e-mails
+    subject -> str
+    from_addr -> str
+    to_addrs -> []
+    filesnames -> []
     """
     message = MIMEMultipart()
     message['From'] = from_addr
@@ -38,7 +46,7 @@ def attach_files(subject , from_addr, to_addrs, filesnames):
     message['Subject'] = subject
     message.attach(MIMEText(message))
 
-    for path in filesnames:
+    for path in files_names:
         part = MIMEBase('application', "octet-stream")
         with open(path, 'rb') as file:
             part.set_payload(file.read())
@@ -50,6 +58,9 @@ def attach_files(subject , from_addr, to_addrs, filesnames):
 def connect_to_ssl_server(from_addr, to_addrs, message):
     """
     Handels e-mail sending protocols
+    from_addr -> str
+    to_addrs -> []
+    message -> MIMEmessage object
     """
      # connect with Google's servers
     smtp_ssl_host = 'smtp.gmail.com'
@@ -68,7 +79,8 @@ def connect_to_ssl_server(from_addr, to_addrs, message):
 
 def recieve_emails_into_df():
     """
-    Recieves and saves messages into a pandas dataframe for analysis
+    Recieves and saves messages into a pandas dataframe for analysis,
+    returns the created df
     """
     try:
         mail = connect_to_imap_server()
@@ -99,6 +111,7 @@ def connect_to_imap_server():
 def get_email_ids(mail):
     """
     Returns e-mail id's to determin lengh of list to search within
+    mail -> IMAP object
     """
     data = mail.search(None, 'SENTON 23-Nov-2021')
     mail_ids = data[1]
@@ -111,6 +124,8 @@ def get_email_ids(mail):
 def create_messages_dict(latest_email_id, first_email_id, mail):
     """
     Creates messages dictionary in order to be made into a dataframe
+    latest_email_id, first_email_id -> int
+    mail -> IMAP object
     """
     messages_dict = {'Subject': [], 'From': []}
 
@@ -127,8 +142,8 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
 
 def get_body(email_contents):
     """
-    arguments: email_contents -> type: IMAP e-mail object
     gets the body of an e-mail
+    email_contents -> IMAP object
     """
     message = email.message_from_string(email_contents)
     for payload in message.get_payload():
