@@ -30,8 +30,8 @@ def send_email(subject, from_addr, to_addrs, files_names):
     if files_names != []:
         message_attached = attach_files(subject , from_addr, to_addrs, files_names)
         connect_to_ssl_server(from_addr, to_addrs, message_attached)
-
-    connect_to_ssl_server(from_addr, to_addrs, message)
+    else:
+        connect_to_ssl_server(from_addr, to_addrs, message)
 
 def attach_files(subject , from_addr, to_addrs, files_names):
     """
