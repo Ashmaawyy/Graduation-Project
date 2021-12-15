@@ -67,10 +67,11 @@ def connect_to_ssl_server(from_addr, to_addrs, message):
      # connect with Google's servers
     smtp_ssl_host = 'smtp.gmail.com'
     smtp_ssl_port = 465
+    admin = pd.read_csv('admin_creds.csv')
 
     # use username or email to log in
-    username = 'user@gmail.com'
-    password = '**************'
+    username = admin['user_name']
+    password = admin['password']
 
     server = smtplib.SMTP_SSL(smtp_ssl_host, smtp_ssl_port)
     # to interact with the server, first we log in
@@ -100,8 +101,9 @@ def connect_to_imap_server():
     """
     Handles recieve protocols, returns mail -> IMAP object
     """
-    username = 'user@gmail.com'
-    password = '**************'
+    admin = pd.read_csv('admin_creds.csv')
+    username = admin['user_name']
+    password = admin['password']
     server = 'imap.gmail.com'
 
     # connect to the server and go to its inbox
