@@ -143,5 +143,5 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
                 msg = email.message_from_string(str(arr[1],'utf-8'))
                 messages_dict['subject'].append(msg['subject'])
                 messages_dict['from'].append(msg['from'])
-                messages_dict['body'].append(msg.get_payload(decode=True))
+                messages_dict['body'].append(msg.get_payload(decode = True))
     return messages_dict
