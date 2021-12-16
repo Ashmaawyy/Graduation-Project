@@ -13,8 +13,8 @@ import imaplib
 import traceback
 import pandas as pd
 
-from_addr  = pd.read_csv('admin creds.csv')
-from_addr = from_addr['value'][0]
+admin_creds = pd.read_csv('admin creds.csv')
+from_addr = admin_creds['value'][0]
 
 def send_email(subject, to_addrs, files_names):
     """
@@ -71,7 +71,6 @@ def connect_to_ssl_server(to_addrs, message):
      # connect with Google's servers
     smtp_ssl_host = 'smtp.gmail.com'
     smtp_ssl_port = 465
-    admin_creds = pd.read_csv('admin creds.csv')
 
     # use username or email to log in
     username = admin_creds['value'][0]
@@ -81,7 +80,7 @@ def connect_to_ssl_server(to_addrs, message):
     # to interact with the server, first we log in
     server.login(username, password)
     # and then we send the message
-    server.sendmail(from_addr, to_addrs, message.as_string())
+    server.sendmail(username, to_addrs, message.as_string())
     server.quit()
 
 def recieve_emails_into_df():
@@ -105,7 +104,6 @@ def connect_to_imap_server():
     """
     Handles recieve protocols, returns mail -> IMAP object
     """
-    admin_creds = pd.read_csv('admin creds.csv')
     username = admin_creds['value'][0]
     password = admin_creds['value'][1]
     server = 'imap.gmail.com'
