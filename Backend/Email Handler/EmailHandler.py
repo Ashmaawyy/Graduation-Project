@@ -119,7 +119,7 @@ def get_email_ids(mail):
     Returns e-mail id's to determin lengh of list to search within
     mail -> IMAP object
     """
-    data = mail.search(None, 'SENTON 23-Nov-2021')
+    data = mail.search(None, 'SENTON 16-Nov-2021')
     mail_ids = data[1]
     id_list = mail_ids[0].split()
     first_email_id = int(id_list[0])
@@ -133,24 +133,15 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
     latest_email_id, first_email_id -> int
     mail -> IMAP object
     """
-    messages_dict = {'Subject': [], 'From': []}
+    messages_dict = {'subject': [], 'from': [], 'body': []}
 
     for i in range(latest_email_id, first_email_id, -1):
-        data = mail.fetch(str(i), '(RFC822)' )
+        data = mail.fetch(str(i), '(RFC822)')
         for response_part in data:
             arr = response_part[0]
             if isinstance(arr, tuple):
                 msg = email.message_from_string(str(arr[1],'utf-8'))
-                messages_dict['Subject'].append(msg['subject'])
-                messages_dict['From'].append(msg['from'])
-                #messages_dict['Body'].append(get_body(msg))
+                messages_dict['subject'].append(msg['subject'])
+                messages_dict['from'].append(msg['from'])
+                messages_dict['body'].append(msg.get_payload(decode=True))
     return messages_dict
-
-def get_body(email_contents):
-    """
-    gets the body of an e-mail
-    email_contents -> IMAP object
-    """
-    message = email.message_from_string(email_contents)
-    for payload in message.get_payload():
-        return payload.get_payload()
