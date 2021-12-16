@@ -13,7 +13,10 @@ import imaplib
 import traceback
 import pandas as pd
 
-def send_email(subject, from_addr, to_addrs, files_names):
+from_addr  = pd.read_csv('admin creds.csv')
+from_addr = from_addr['value'][0]
+
+def send_email(subject, to_addrs, files_names):
     """
     Sends e-mails
     subject -> str
@@ -28,11 +31,11 @@ def send_email(subject, from_addr, to_addrs, files_names):
     message['to'] = COMMASPACE.join(to_addrs)
 
     if files_names != []:
-        message = attach_files(subject , from_addr, to_addrs, files_names)
+        message = attach_files(subject , to_addrs, files_names)
 
-    connect_to_ssl_server(from_addr, to_addrs, message)
+    connect_to_ssl_server(to_addrs, message)
 
-def attach_files(subject , from_addr, to_addrs, files_names):
+def attach_files(subject , to_addrs, files_names):
     """
     Attaches files for outgoing e-mails
     subject -> str
@@ -58,7 +61,7 @@ def attach_files(subject , from_addr, to_addrs, files_names):
         message_attached.attach(part)
     return message_attached
 
-def connect_to_ssl_server(from_addr, to_addrs, message):
+def connect_to_ssl_server(to_addrs, message):
     """
     Handels e-mail sending protocols
     from_addr -> str
