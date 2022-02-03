@@ -3,4 +3,4 @@
 from EmailHandler import recieve_emails_into_df
 
 messages_df = recieve_emails_into_df()
-print(messages_df['subject'].head())
+print(messages_df)
