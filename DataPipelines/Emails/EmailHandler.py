@@ -119,7 +119,7 @@ def get_email_ids(mail):
     Returns e-mail id's to determin lengh of list to search within
     mail -> IMAP object
     """
-    data = mail.search(None, 'All')
+    data = mail.search(None, 'ALL')
     mail_ids = data[1]
     id_list = mail_ids[0].split()
     first_email_id = int(id_list[0])
