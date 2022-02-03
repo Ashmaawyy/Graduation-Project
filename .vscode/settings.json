@@ -1,6 +1,5 @@
 {
     "python.analysis.extraPaths": [
-        "./Backend/Email Handler",
-        "./Backend/Google Forms Handler"
+        "./Data Pipelines"
     ]
 }
