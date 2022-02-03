@@ -4,5 +4,5 @@
 from Emails.EmailHandler import *
 from GoogleForms.GoogleFormsHandler import *
 
-send_email("Prof Dr.Seham, We need some typical e-mails you'd send to the system :)",
-['seham.moawad@eng.modern-academy.edu.eg'])
+#send_email("Prof Dr.Seham, We need some typical e-mails you'd send to the system :)",
+#['mohamed204798@gmail.com'])
