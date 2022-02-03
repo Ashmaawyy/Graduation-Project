@@ -16,7 +16,7 @@ import pandas as pd
 admin_creds = pd.read_csv('admin creds.csv')
 from_addr = admin_creds['value'][0]
 
-def send_email(subject, to_addrs, files_names):
+def send_email(subject, to_addrs, files_names = None):
     """
     Sends e-mails
     subject -> str
@@ -24,13 +24,13 @@ def send_email(subject, to_addrs, files_names):
     to_addrs -> []
     filesnames -> []
     """
-    message = MIMEText('''This Message is sent to you by the QC System :)
+    message = MIMEText('''This Message is sent to you by the QC Department :)
     \n Sincerly, \n Ashmawy ©''')
     message['subject'] = subject
     message['from'] = from_addr
     message['to'] = COMMASPACE.join(to_addrs)
 
-    if files_names != []:
+    if files_names is not None:
         message = attach_files(subject , to_addrs, files_names)
 
     connect_to_ssl_server(to_addrs, message)
@@ -48,7 +48,7 @@ def attach_files(subject , to_addrs, files_names):
     message_attached['To'] = COMMASPACE.join(to_addrs)
     message_attached['Date'] = formatdate(localtime = True)
     message_attached['Subject'] = subject
-    message_attached.attach(MIMEText('''This Message is sent to you by the QC System :)
+    message_attached.attach(MIMEText('''This Message is sent to you by the QC Department :)
     \n Sincerly, \n Ashmawy ©'''))
 
     for path in files_names:
@@ -145,3 +145,4 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
                 messages_dict['from'].append(msg['from'])
                 messages_dict['body'].append(msg.get_payload(decode = True))
     return messages_dict
+send_email('Sending multi files', ['mohamed204798@gmail.com'])
