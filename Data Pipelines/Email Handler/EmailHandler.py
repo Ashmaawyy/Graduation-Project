@@ -145,4 +145,4 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
                 messages_dict['from'].append(msg['from'])
                 messages_dict['body'].append(msg.get_payload(decode = True))
     return messages_dict
-send_email('Sending multi files', ['mohamed204798@gmail.com'])
+
