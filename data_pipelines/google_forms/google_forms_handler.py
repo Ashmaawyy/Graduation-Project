@@ -1,9 +1,15 @@
+# pylint: disable=bad-indentation
+# pylint: disable=missing-module-docstring
+# pylint: disable=anomalous-backslash-in-string
+import os
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
-import os
 import pandas as pd
 
 def access_drive():
+	"""
+	To access google drive
+	"""
 	# Initializing a GoogleAuth Object
 	gauth = GoogleAuth()
 
@@ -13,7 +19,7 @@ def access_drive():
 
 	if gauth.credentials is None:
     	# Authenticate if they're not there
-		GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = os.getcwd() + '\Backend\Google Forms Handler\client_secrets.json'
+		GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = os.getcwd() + '\client_secrets.json'
 		gauth.LocalWebserverAuth()
 	elif gauth.access_token_expired:
     	# Refresh them if expired
@@ -21,7 +27,7 @@ def access_drive():
 	else:
     	# Initialize the saved creds
 		gauth.Authorize()
-	
+
 	gauth.SaveCredentialsFile("creds.txt")
 
 	# GoogleDrive Instance is created using authenticated GoogleAuth instance
@@ -29,6 +35,9 @@ def access_drive():
 	return drive
 
 def read_form_response():
+	"""
+	To return a dataframe with the expected google form responces
+	"""
 	drive = access_drive()
 	# Initialize GoogleDriveFile instance with file id
 	file_obj = drive.CreateFile({'id': '1B7d0Ds_amgNwf8DjkmKZFQK9RCPn6zNZxQ8W2VnSOz0'})
