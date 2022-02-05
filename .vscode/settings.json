@@ -1,5 +1,5 @@
 {
     "python.analysis.extraPaths": [
-        "./data_pipelines/."
+        "./data_pipelines"
     ]
 }
