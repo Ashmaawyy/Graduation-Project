@@ -3,7 +3,7 @@
 # pylint: disable=import-error
 # pylint: disable=wildcard-import
 # pylint: disable=undefined-variable
-from EmailHandler import recieve_emails_into_df
+from email_handler import recieve_emails_into_df
 
 messages_df = recieve_emails_into_df()
 print(messages_df)
