@@ -3,5 +3,12 @@
         "./data_pipelines",
         "./data_pipelines/emails",
         "./data_pipelines/google_forms"
-    ]
+    ],
+    "workbench.editor.autoLockGroups": {
+        "default": true,
+        "imagePreview.previewEditor": true,
+        "vscode.markdown.preview.editor": true,
+        "gc-excelviewer-csv-editor": true,
+        "jupyter-notebook": true
+    }
 }
