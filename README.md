@@ -1,7 +1,5 @@
 # Welcome To Graduation Project : )
 
-## To install required liberaries type in conda prompt: pip install -r requirements.txt
-
 ## Modules in our ETL
 
 ### The EmailHandler:  
