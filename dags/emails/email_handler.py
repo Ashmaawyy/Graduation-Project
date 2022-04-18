@@ -46,7 +46,7 @@ def attach_files(subject , to_addrs, files_names):
     message_attached['To'] = COMMASPACE.join(to_addrs)
     message_attached['Date'] = formatdate(localtime = True)
     message_attached['Subject'] = subject
-    message_attached.attach(MIMEText('''This Message is sent to you by the QC Department :)
+    message_attached.attach(MIMEText('''This Message is sent to you by the QC Department : )
     \n Sincerly, \n Ashmawy ©'''))
 
     for path in files_names:
