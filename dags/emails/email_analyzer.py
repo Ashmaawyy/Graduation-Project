@@ -36,6 +36,3 @@ parser = Parser()
 # Poviding the input.
 for i in range(len(messages_df['body'])):
     parser.feed(str(messages_df['body'][i]))
-
-for i in range(len(all_data)):
-    all_data.append(re.sub(r'^\\r\\n *', '', all_data[i]))
