@@ -38,5 +38,3 @@ parser.feed(str(messages_df['body'][0]))
 
 for i in range(len(all_data)):
     all_data.append(re.sub(r'^\\r\\n *', '', all_data[i]))
-print(all_data)
-#print("data:", all_data)
