@@ -38,7 +38,6 @@ def attach_files(subject , to_addrs, files_names):
     """
     Attaches files for outgoing e-mails
     subject -> str
-    from_addr -> str
     to_addrs -> []
     filesnames -> []
     """
@@ -63,7 +62,6 @@ def attach_files(subject , to_addrs, files_names):
 def connect_to_ssl_server(to_addrs, message):
     """
     Handels e-mail sending protocols
-    from_addr -> str
     to_addrs -> []
     message -> MIMEmessage object
     """
