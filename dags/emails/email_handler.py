@@ -20,7 +20,6 @@ def send_email(subject, to_addrs, files_names = None):
     """
     Sends e-mails
     subject -> str
-    from_addr -> str
     to_addrs -> []
     filesnames -> []
     """
