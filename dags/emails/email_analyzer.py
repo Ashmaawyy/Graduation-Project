@@ -10,14 +10,6 @@ from html.parser import HTMLParser
 messages_df = recieve_emails_into_df()
 
 class Parser(HTMLParser):
-  # method to append the start tag to the list start_tags.
-    def handle_starttag(self, tag, attrs):
-        global start_tags
-        start_tags.append(tag)
-        # method to append the end tag to the list end_tags.
-    def handle_endtag(self, tag):
-        global end_tags
-        end_tags.append(tag)
     # method to append the data between the tags to the list all_data.
     def handle_data(self, data):
         global all_data
@@ -27,8 +19,6 @@ class Parser(HTMLParser):
         global comments
         comments.append(data)
 
-start_tags = []
-end_tags = []
 all_data = []
 comments = []
 # Creating an instance of our class.
