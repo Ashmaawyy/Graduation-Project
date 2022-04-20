@@ -10,7 +10,7 @@ messages_df = recieve_emails_into_df()
 
 class Parser(HTMLParser):
     '''
-    A class to parse HTML junk :)
+    A class that parses HTML junk :)
     '''
     # method to append the data between the tags to the list all_data.
     def handle_data(self, data):
