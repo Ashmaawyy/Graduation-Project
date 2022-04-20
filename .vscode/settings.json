@@ -1,8 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./data_pipelines",
-        "./data_pipelines/emails",
-        "./data_pipelines/google_forms"
+        "./dags"
     ],
     "workbench.editor.autoLockGroups": {
         "default": true,
