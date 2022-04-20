@@ -23,7 +23,7 @@ def send_email(subject, to_addrs, files_names = None):
     to_addrs -> []
     filesnames -> []
     """
-    message = MIMEText('''This Message is sent to you by the QC Department :)
+    message = MIMEText('''This Message is sent to you by the QC Department : )
     \n Sincerly, \n Ashmawy ©''')
     message['subject'] = subject
     message['from'] = from_addr
@@ -33,6 +33,7 @@ def send_email(subject, to_addrs, files_names = None):
         message = attach_files(subject , to_addrs, files_names)
 
     connect_to_ssl_server(to_addrs, message)
+    print('Message sent successfully :)')
 
 def attach_files(subject , to_addrs, files_names):
     """
