@@ -21,8 +21,8 @@ class Parser(HTMLParser):
         global comments
         comments.append(data)
 
-all_data = []
-comments = []
+all_body_data = []
+body_html_comments = []
 # Creating an instance of our class.
 parser = Parser()
 # Poviding the input.
