@@ -7,22 +7,19 @@ from email_handler import recieve_emails_into_df
 from html.parser import HTMLParser
 
 messages_df = recieve_emails_into_df()
-
+all_body_data = []
+body_html_comments = []
 class Parser(HTMLParser):
     '''
     A class that parses HTML junk :)
     '''
     # method to append the data between the tags to the list all_data.
     def handle_data(self, data):
-        global all_data
-        all_data.append(data)
+        all_body_data.append(data)
     # method to append the comment to the list comments.
     def handle_comment(self, data):
-        global comments
-        comments.append(data)
+        body_html_comments.append(data)
 
-all_body_data = []
-body_html_comments = []
 # Creating an instance of our class.
 parser = Parser()
 # Poviding the input.
