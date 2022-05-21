@@ -33,7 +33,7 @@ def send_email(subject, to_addrs, files_names = None):
         message = attach_files(subject , to_addrs, files_names)
 
     connect_to_ssl_server(to_addrs, message)
-    print('Message sent :)')
+    print('Message sent successfully : )')
 
 def attach_files(subject , to_addrs, files_names):
     """
