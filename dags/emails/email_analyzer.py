@@ -20,7 +20,8 @@ class Parser(HTMLParser):
         body_data.append(data)
 
     # method to append the comment to the list comments.
-    def handle_comments(self, data):
+    @staticmethod
+    def handle_comments(data):
         body_html_comments.append(data)
 
 
