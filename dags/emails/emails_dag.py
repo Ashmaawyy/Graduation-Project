@@ -16,8 +16,10 @@ with DAG(dag_id="emails_dag",
 
          task1 = PythonOperator(
              task_id = "send_subbmission_email_to_doctors",
-             python_callable = send_email(
-                 "Annual docs subbmission email for the teaching staff",
-                 teaching_staff_emails, message_text))
+             python_callable = send_email,
+             op_kwargs = {
+                 'Subject': "Annual docs subbmission email for the teaching staff",
+                 'to_addrs': teaching_staff_emails,
+                 'message_text': message_text})
 
 task1
