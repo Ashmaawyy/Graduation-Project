@@ -153,9 +153,7 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
 teaching_staff_emails = ["SEHAM.MOAWAD@eng.modern-academy.edu.eg",
 "SABRY.AMOATY@eng.modern-academy.edu.eg", "muhammad.alashmaawy@gmail.com"]
 
-message_text = '''This Message is sent to you by the QC Department
-    to submit the required docs : )
-    \n Sincerly, \n Ashmawy ©'''
+message_text = 'This Message is sent to you by the QC Department to submit the required docs : )\nSincerly,\n Ashmawy ©'
 
 with DAG(dag_id = "email_handler",
          start_date = datetime(2023,7,1),
