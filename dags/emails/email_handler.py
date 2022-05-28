@@ -12,8 +12,14 @@ import email
 import imaplib
 import traceback
 import pandas as pd
+import os
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+from datetime import datetime
 
-admin_creds = pd.read_csv('admin creds.csv')
+
+
+admin_creds = pd.read_csv(os.getcwd() + '/airflow/dags/admin_creds.csv')
 from_addr = admin_creds['value'][0]
 
 def send_email(subject, to_addrs, message_text, files_names = None):
@@ -143,3 +149,25 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
                 messages_dict['from'].append(msg['from'])
                 messages_dict['body'].append(msg.get_payload(decode = True))
     return messages_dict
+
+teaching_staff_emails = ["SEHAM.MOAWAD@eng.modern-academy.edu.eg",
+"SABRY.AMOATY@eng.modern-academy.edu.eg", "muhammad.alashmaawy@gmail.com"]
+
+message_text = '''This Message is sent to you by the QC Department
+    to submit the required docs : )
+    \n Sincerly, \n Ashmawy ©'''
+
+with DAG(dag_id = "email_handler",
+         start_date = datetime(2023,7,1),
+         schedule_interval = "@yearly",
+         catchup = False) as dag:
+
+        task1 = PythonOperator(
+            task_id = "send_subbmission_email_to_doctors",
+            python_callable = send_email,
+            op_kwargs = {
+                'subject': "Annual docs subbmission email for the teaching staff",
+                'to_addrs': teaching_staff_emails,
+                'message_text': message_text})
+
+task1
