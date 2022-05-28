@@ -9,7 +9,7 @@ message_text = '''This Message is sent to you by the QC Department
     to submit the required docs : )
     \n Sincerly, \n Ashmawy ©'''
 
-with DAG(dag_id="emails_dag",
+with DAG(dag_id = "emails_dag",
          start_date = datetime(2023,7,1),
          schedule_interval = "@yearly",
          catchup = False) as dag:
