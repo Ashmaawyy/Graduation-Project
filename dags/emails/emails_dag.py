@@ -1,7 +1,7 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
-from emails.email_handler import send_email
+from email_handler import send_email
 
 teaching_staff_emails = ["SEHAM.MOAWAD@eng.modern-academy.edu.eg",
 "SABRY.AMOATY@eng.modern-academy.edu.eg"]
