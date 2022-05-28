@@ -16,15 +16,15 @@ import pandas as pd
 admin_creds = pd.read_csv('admin creds.csv')
 from_addr = admin_creds['value'][0]
 
-def send_email(subject, to_addrs, files_names = None):
+def send_email(subject, to_addrs, message_text, files_names = None):
     """
     Sends e-mails
     subject -> str
     to_addrs -> []
+    message_text -> str
     filesnames -> []
     """
-    message = MIMEText('''This Message is sent to you by the QC Department : )
-    \n Sincerly, \n Ashmawy ©''')
+    message = MIMEText(message_text)
     message['subject'] = subject
     message['from'] = from_addr
     message['to'] = COMMASPACE.join(to_addrs)
