@@ -156,7 +156,7 @@ teaching_staff_emails = ["SEHAM.MOAWAD@eng.modern-academy.edu.eg",
 doctor_submission_message = ''' This Message is sent to you by the QC Department 
                                 to remind you to submit the required docs, 
                                 you can reply to this email with the required docs : )
-                                \nSincerly,\n Ashmawy © '''
+                                \nSincerly,\nAshmawy © '''
 
 with DAG(dag_id = "email_handler",
          start_date = datetime(2023,7,1),
