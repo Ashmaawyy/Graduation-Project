@@ -153,19 +153,22 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
 teaching_staff_emails = ["SEHAM.MOAWAD@eng.modern-academy.edu.eg",
 "SABRY.AMOATY@eng.modern-academy.edu.eg", "muhammad.alashmaawy@gmail.com"]
 
-message_text = 'This Message is sent to you by the QC Department to submit the required docs : )\nSincerly,\n Ashmawy ©'
+doctor_submission_message = ''' This Message is sent to you by the QC Department 
+                                to remind you to submit the required docs, 
+                                you can reply to this email with the required docs : )
+                                \nSincerly,\n Ashmawy © '''
 
 with DAG(dag_id = "email_handler",
          start_date = datetime(2023,7,1),
          schedule_interval = "@yearly",
          catchup = False) as dag:
 
-        task1 = PythonOperator(
+        doctor_submission = PythonOperator(
             task_id = "send_subbmission_email_to_doctors",
             python_callable = send_email,
             op_kwargs = {
                 'subject': "Annual docs subbmission email for the teaching staff",
                 'to_addrs': teaching_staff_emails,
-                'message_text': message_text})
+                'message_text': doctor_submission_message})
 
-task1
+doctor_submission
