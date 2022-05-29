@@ -19,7 +19,7 @@ from datetime import datetime
 
 
 
-admin_creds = pd.read_csv(os.getcwd() + '/airflow/dags/admin_creds.csv')
+admin_creds = pd.read_csv(os.getcwd() + '/dags/emails/admin_creds.csv')
 from_addr = admin_creds['value'][0]
 
 def send_email(subject, to_addrs, message_text, files_names = None):
