@@ -16,10 +16,11 @@ import os
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
+from email_handler import send_email
 
 
 
-admin_creds = pd.read_csv(os.getcwd() + '/dags/emails/admin_creds.csv')
+admin_creds = pd.read_csv(os.getcwd() + '/airflow/dags/admin_creds.csv')
 from_addr = admin_creds['value'][0]
 
 def send_email(subject, to_addrs, message_text, files_names = None):
@@ -153,22 +154,36 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
 teaching_staff_emails = ["SEHAM.MOAWAD@eng.modern-academy.edu.eg",
 "SABRY.AMOATY@eng.modern-academy.edu.eg", "muhammad.alashmaawy@gmail.com"]
 
-doctor_submission_message = ''' This Message is sent to you by the QC Department 
-                                to remind you to submit the required docs, 
-                                you can reply to this email with the required docs : )
-                                \nSincerly,\nAshmawy © '''
+#students_emails = ['al_ashmawy@outlook.com', 'medo333best@gmail.com']
 
-with DAG(dag_id = "email_handler",
-         start_date = datetime(2023,7,1),
-         schedule_interval = "@yearly",
+doctor_submission_message = ''' This Message is sent to you by the QC Department to remind you to submit the required docs, you can reply to this email with the required docs : )
+                                \nSincerly,\n Ashmawy © '''
+
+student_survey_message = ''' This survey is sent to you from the Quality Control department to insure the quality of the education you recieve
+                            \nSincerly,\nAshmawy © '''
+
+with DAG(dag_id = "emails_handler",
+         start_date = datetime(2022,5,30),
+         schedule_interval = "@daily",
          catchup = False) as dag:
 
         doctor_submission = PythonOperator(
-            task_id = "send_subbmission_email_to_doctors",
+            task_id = "send_submission_email_to_doctors",
             python_callable = send_email,
             op_kwargs = {
                 'subject': "Annual docs subbmission email for the teaching staff",
                 'to_addrs': teaching_staff_emails,
-                'message_text': doctor_submission_message})
+                'message_text': doctor_submission_message }
+                )
 
+        student_survey = PythonOperator(
+            task_id = 'send_survey_to_students',
+            python_callable = send_email,
+            op_kwargs = {
+                'subject' : 'A survey to insure education quality for Modern Academy Maadi Students',
+                'to_addrs': teaching_staff_emails,
+                'message_text': student_survey_message }
+        )
+
+student_survey
 doctor_submission
