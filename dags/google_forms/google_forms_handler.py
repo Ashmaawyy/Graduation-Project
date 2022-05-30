@@ -4,7 +4,7 @@
 import os
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
-import pandas as pd
+from pandas import read_excel
 
 def access_drive():
 	"""
@@ -44,5 +44,5 @@ def read_form_response():
 	file_obj.GetContentFile('Test.xls',
 			mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
-	form_excel = pd.read_excel('Test.xls')
-	return form_excel
+	form_responces_df = read_excel('Test.xls')
+	return form_responces_df
