@@ -1,7 +1,7 @@
 # pylint: disable=bad-indentation
 # pylint: disable=missing-module-docstring
 # pylint: disable=anomalous-backslash-in-string
-import os
+from os import getcwd
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from pandas import read_excel
@@ -19,7 +19,7 @@ def access_drive():
 
 	if gauth.credentials is None:
     	# Authenticate if they're not there
-		GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = os.getcwd() + '\client_secrets.json'
+		GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = getcwd() + '\client_secrets.json'
 		gauth.LocalWebserverAuth()
 	elif gauth.access_token_expired:
     	# Refresh them if expired
