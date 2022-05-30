@@ -2,10 +2,10 @@ from pathlib import Path
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
+from pandas import read_csv, DataFrame
 import smtplib, email, imaplib, traceback, os, mysql.connector
-import pandas as pd
 
-admin_creds = pd.read_csv(os.getcwd() + '/airflow/dags/admin_creds.csv')
+admin_creds = read_csv(os.getcwd() + '/airflow/dags/admin_creds.csv')
 from_addr = admin_creds['value'][0]
 
 def send_email(subject, to_addrs, message_text, files_names = None):
@@ -80,7 +80,7 @@ def recieve_emails_into_df():
     try:
         mail = connect_to_imap_server()
         latest_email_id, first_email_id = get_email_ids(mail)
-        messages_df = pd.DataFrame.from_dict(
+        messages_df = DataFrame.from_dict(
             create_messages_dict(latest_email_id, first_email_id, mail), orient = 'columns')
         print('Messages saved into a dataframe successfully :)')
 
