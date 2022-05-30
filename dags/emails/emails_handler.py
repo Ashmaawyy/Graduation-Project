@@ -1,21 +1,14 @@
 # pylint: disable=invalid-name
 # pylint: disable=broad-except
 # pylint: disable=missing-module-docstring
-import smtplib # To handle e-mail send-recieve protocols
+
 from pathlib import Path
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email.mime.text import MIMEText
-from email.utils import COMMASPACE, formatdate
-from email import encoders
-import email
-import imaplib
-import traceback
-import pandas as pd
-import os
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
+import smtplib, email, imaplib, traceback, os, mysql.connector
+import pandas as pd
+
 
 
 
@@ -30,37 +23,36 @@ def send_email(subject, to_addrs, message_text, files_names = None):
     message_text -> str
     filesnames -> []
     """
-    message = MIMEText(message_text)
+    message = email.mime.text.MIMEText(message_text)
     message['subject'] = subject
     message['from'] = from_addr
-    message['to'] = COMMASPACE.join(to_addrs)
+    message['to'] = email.utils.COMMASPACE.join(to_addrs)
 
     if files_names is not None:
-        message = attach_files(subject , to_addrs, files_names)
+        message = attach_files(subject , to_addrs, message_text, files_names)
 
     connect_to_ssl_server(to_addrs, message)
     print('Message sent successfully :)')
 
-def attach_files(subject , to_addrs, files_names):
+def attach_files(subject , to_addrs, message_text, files_names):
     """
     Attaches files for outgoing e-mails
     subject -> str
     to_addrs -> []
     filesnames -> []
     """
-    message_attached = MIMEMultipart()
+    message_attached = email.mime.multipart.MIMEMultipart()
     message_attached['From'] = from_addr
-    message_attached['To'] = COMMASPACE.join(to_addrs)
-    message_attached['Date'] = formatdate(localtime = True)
+    message_attached['To'] = email.utils.COMMASPACE.join(to_addrs)
+    message_attached['Date'] = email.utils.formatdate(localtime = True)
     message_attached['Subject'] = subject
-    message_attached.attach(MIMEText('''This Message is sent to you by the QC Department : )
-    \n Sincerly, \n Ashmawy ©'''))
+    message_attached.attach(email.mime.text.MIMEText(message_text))
 
     for path in files_names:
-        part = MIMEBase('application', "octet-stream")
+        part = email.mime.base.MIMEBase('application', "octet-stream")
         with open(path, 'r') as file:
             part.set_payload(file.read())
-        encoders.encode_base64(part)
+        email.encoders.encode_base64(part)
         part.add_header('Content-Disposition',
                         'attachment; filename={}'.format(Path(path).name))
         message_attached.attach(part)
