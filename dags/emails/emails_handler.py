@@ -148,8 +148,7 @@ teaching_staff_emails = [
 doctor_submission_message = '''This Message is sent to you by the QC Department to remind you to submit the required docs : )
                                 \nSincerly,\nAshmawy ©'''
 
-student_survey_message = '''This survey is sent to you from the Quality Control department to insure the quality of the education you recieve
-                            https://forms.gle/U585CaruQtVMFXoE7
+student_survey_message = '''This survey is sent to you from the Quality Control department to insure the quality of the education you recieve\nhttps://forms.gle/U585CaruQtVMFXoE7
                             \nSincerly,\nAshmawy ©'''
 
 with DAG(dag_id = "emails_handler",
