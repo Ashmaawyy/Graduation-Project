@@ -155,11 +155,11 @@ teaching_staff_emails = ["SEHAM.MOAWAD@eng.modern-academy.edu.eg",
 
 #students_emails = ['al_ashmawy@outlook.com', 'medo333best@gmail.com']
 
-doctor_submission_message = ''' This Message is sent to you by the QC Department to remind you to submit the required docs, you can reply to this email with the required docs : )
-                                \nSincerly,\n Ashmawy © '''
+doctor_submission_message = '''This Message is sent to you by the QC Department to remind you to submit the required docs, you can reply to this email with the required docs : )
+                                \nSincerly,\n Ashmawy ©'''
 
-student_survey_message = ''' This survey is sent to you from the Quality Control department to insure the quality of the education you recieve
-                            \nSincerly,\nAshmawy © '''
+student_survey_message = '''This survey is sent to you from the Quality Control department to insure the quality of the education you recieve
+                            \nSincerly,\nAshmawy ©'''
 
 with DAG(dag_id = "emails_handler",
          start_date = datetime(2022,5,30),
