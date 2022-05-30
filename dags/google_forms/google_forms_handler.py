@@ -31,7 +31,7 @@ def access_drive():
 	drive = GoogleDrive(gauth)
 	return drive
 
-def read_form_response():
+def get_form_response_into_df():
 	"""
 	To return a dataframe with the expected google form responces
 	"""
@@ -43,5 +43,3 @@ def read_form_response():
 
 	form_responces_df = read_excel('Student Survey (Responces).xls')
 	return form_responces_df
-
-print(read_form_response().head())
