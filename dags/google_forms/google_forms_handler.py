@@ -1,6 +1,3 @@
-# pylint: disable=bad-indentation
-# pylint: disable=missing-module-docstring
-# pylint: disable=anomalous-backslash-in-string
 from os import getcwd
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
