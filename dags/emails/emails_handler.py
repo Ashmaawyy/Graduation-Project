@@ -3,7 +3,7 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
 from pandas import read_csv, DataFrame
-import smtplib, email, imaplib, traceback, os, mysql.connector
+import smtplib, email, imaplib, traceback, os#, mysql.connector
 
 admin_creds = read_csv(os.getcwd() + '/airflow/dags/admin_creds.csv')
 from_addr = admin_creds['value'][0]
