@@ -135,13 +135,17 @@ def create_messages_dict(latest_email_id, first_email_id, mail):
                 messages_dict['body'].append(msg.get_payload(decode = True))
     return messages_dict
 
-teaching_staff_emails = ["SEHAM.MOAWAD@eng.modern-academy.edu.eg",
-"SABRY.AMOATY@eng.modern-academy.edu.eg", "muhammad.alashmaawy@gmail.com"]
+teaching_staff_emails = [
+    'SEHAM.MOAWAD@eng.modern-academy.edu.eg',
+    'SABRY.AMOATY@eng.modern-academy.edu.eg',
+    'muhammad.alashmaawy@gmail.com']
 
-#students_emails = ['al_ashmawy@outlook.com', 'medo333best@gmail.com']
+#students_emails = [
+#   'al_ashmawy@outlook.com',
+#   'medo333best@gmail.com']
 
 doctor_submission_message = '''This Message is sent to you by the QC Department to remind you to submit the required docs : )
-                                \nSincerly,\n Ashmawy ©'''
+                                \nSincerly,\nAshmawy ©'''
 
 student_survey_message = '''This survey is sent to you from the Quality Control department to insure the quality of the education you recieve
                             \nSincerly,\nAshmawy ©'''
