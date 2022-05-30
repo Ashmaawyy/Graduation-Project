@@ -1,16 +1,9 @@
-# pylint: disable=invalid-name
-# pylint: disable=broad-except
-# pylint: disable=missing-module-docstring
-
 from pathlib import Path
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
 import smtplib, email, imaplib, traceback, os, mysql.connector
 import pandas as pd
-
-
-
 
 admin_creds = pd.read_csv(os.getcwd() + '/airflow/dags/admin_creds.csv')
 from_addr = admin_creds['value'][0]
