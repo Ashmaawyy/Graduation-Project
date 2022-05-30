@@ -3,6 +3,19 @@ from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from pandas import read_excel
 
+def get_form_response_into_df():
+	"""
+	To return a dataframe with the expected google form responces
+	"""
+	drive = access_drive()
+	# Initialize GoogleDriveFile instance with file id
+	file_obj = drive.CreateFile({'id': '1UvWmhv59BSTwQMBAaKFFiZM6VRmT6hcrLVYkUwj-k8E'})
+	file_obj.GetContentFile('Student Survey (Responces).xls',
+			mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+	form_responces_df = read_excel('Student Survey (Responces).xls')
+	return form_responces_df
+
 def access_drive():
 	"""
 	To access google drive
@@ -30,16 +43,3 @@ def access_drive():
 	# GoogleDrive Instance is created using authenticated GoogleAuth instance
 	drive = GoogleDrive(gauth)
 	return drive
-
-def get_form_response_into_df():
-	"""
-	To return a dataframe with the expected google form responces
-	"""
-	drive = access_drive()
-	# Initialize GoogleDriveFile instance with file id
-	file_obj = drive.CreateFile({'id': '1UvWmhv59BSTwQMBAaKFFiZM6VRmT6hcrLVYkUwj-k8E'})
-	file_obj.GetContentFile('Student Survey (Responces).xls',
-			mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-
-	form_responces_df = read_excel('Student Survey (Responces).xls')
-	return form_responces_df
