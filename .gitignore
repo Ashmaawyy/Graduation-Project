@@ -133,3 +133,4 @@ dmypy.json
 /.idea
 *.json
 *.xls
+creds.txt
