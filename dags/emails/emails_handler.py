@@ -150,8 +150,8 @@ student_survey_message = '''This survey is sent to you from the Quality Control 
                             \nSincerly,\nAshmawy ©'''
 
 with DAG(dag_id = "emails_handler",
-         start_date = datetime(2022,5,30),
-         schedule_interval = "@daily",
+         start_date = datetime(2022,7,1),
+         schedule_interval = "@yearly",
          catchup = False) as dag:
 
         doctor_submission = PythonOperator(
@@ -172,5 +172,5 @@ with DAG(dag_id = "emails_handler",
                 'message_text': student_survey_message }
         )
 
+doctor_submission
 student_survey
-#doctor_submission
