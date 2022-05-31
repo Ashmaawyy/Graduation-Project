@@ -7,6 +7,13 @@ def get_form_response_into_df():
 	"""
 	To return a dataframe with the expected google form responces
 	"""
+	rename_dict = {
+		'How would you rate the overall learning journey for this course?': 'learning journey',
+		'How would you rate the course content in sight of the current market requirements?': 'course content',
+		'How would you rate the practical implementation of this course contents?': 'practical implementation',
+		'How did this course improve your skill set?': 'skill set improvement',
+		"How many new skills did you acquire during the course's journey?": 'new skills acquired'
+	}
 	drive = access_drive()
 	# Initialize GoogleDriveFile instance with file id
 	file_obj = drive.CreateFile({'id': '1UvWmhv59BSTwQMBAaKFFiZM6VRmT6hcrLVYkUwj-k8E'})
@@ -14,7 +21,7 @@ def get_form_response_into_df():
 			mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 	form_responces_df = read_excel('Student Survey (Responces).xls')
-	return form_responces_df
+	return form_responces_df.rename(columns = rename_dict)
 
 def access_drive():
 	"""
