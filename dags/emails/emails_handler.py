@@ -1,3 +1,4 @@
+from email.mime.message import MIMEMessage
 from pathlib import Path
 from airflow import DAG
 from airflow.operators.python import PythonOperator
@@ -9,13 +10,10 @@ import smtplib, email, imaplib, traceback#, mysql.connector
 admin_creds = read_csv(getcwd() + '/airflow/dags/admin_creds.csv')
 from_addr = admin_creds['value'][0]
 
-def send_email(subject, to_addrs, message_text, files_names = None):
+def send_email(subject: str, to_addrs: list, message_text: str, files_names: list = None):
     """
     Sends e-mails
-    subject -> str
-    to_addrs -> []
-    message_text -> str
-    filesnames -> []
+
     """
     message = email.mime.text.MIMEText(message_text)
     message['subject'] = subject
@@ -28,12 +26,10 @@ def send_email(subject, to_addrs, message_text, files_names = None):
     connect_to_ssl_server(to_addrs, message)
     print('Message sent successfully :)')
 
-def attach_files(subject , to_addrs, message_text, files_names):
+def attach_files(subject: str, to_addrs: list, message_text: str, files_names: list):
     """
     Attaches files for outgoing e-mails
-    subject -> str
-    to_addrs -> []
-    filesnames -> []
+
     """
     message_attached = email.mime.multipart.MIMEMultipart()
     message_attached['From'] = from_addr
@@ -52,11 +48,12 @@ def attach_files(subject , to_addrs, message_text, files_names):
         message_attached.attach(part)
     return message_attached
 
-def connect_to_ssl_server(to_addrs, message):
+def connect_to_ssl_server(to_addrs: list, message: MIMEMessage):
     """
     Handels e-mail sending protocols
     to_addrs -> []
     message -> MIMEmessage object
+
     """
      # connect with Google's servers
     smtp_ssl_host = 'smtp.gmail.com'
@@ -104,10 +101,10 @@ def connect_to_imap_server():
     mail.select('Inbox')
     return mail
 
-def get_email_ids(mail):
+def get_email_ids(mail: imaplib.IMAP4_SSL):
     """
     Returns e-mail id's to determin lengh of list to search within
-    mail -> IMAP object
+
     """
     data = mail.search(None, 'ALL')
     mail_ids = data[1]
@@ -117,11 +114,10 @@ def get_email_ids(mail):
 
     return latest_email_id, first_email_id
 
-def create_messages_dict(latest_email_id, first_email_id, mail):
+def create_messages_dict(latest_email_id: int, first_email_id: int, mail: imaplib.IMAP4_SSL):
     """
     Creates messages dictionary in order to be made into a dataframe
-    latest_email_id, first_email_id -> int
-    mail -> IMAP object
+
     """
     messages_dict = {'subject': [], 'from': [], 'body': []}
 
