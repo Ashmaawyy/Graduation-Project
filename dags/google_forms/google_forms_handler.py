@@ -22,11 +22,14 @@ def get_form_responses_df():
 		'How did this course improve your skill set?': 'skill set improvement',
 		"How many new skills did you acquire during the course's journey?": 'new skills acquired'
 	}
+	
 	drive = get_drive_access()
 	file_id = '1UvWmhv59BSTwQMBAaKFFiZM6VRmT6hcrLVYkUwj-k8E'
 	file_name = 'Student Survey (Responces).xls'
+	
 	get_form_responces_file(drive, file_id, file_name)
 	form_responces_df = read_excel(file_name)
+	
 	return form_responces_df.rename(columns = student_survey_questions_rename_dict)
 
 def get_form_responces_file(drive: GoogleDrive, file_id: str, file_name: str):
