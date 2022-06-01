@@ -23,15 +23,17 @@ def get_form_response_df():
 		"How many new skills did you acquire during the course's journey?": 'new skills acquired'
 	}
 	drive = get_drive_access()
-	create_responces_file(drive)
-	form_responces_df = read_excel('Student Survey (Responces).xls')
+	file_id = '1UvWmhv59BSTwQMBAaKFFiZM6VRmT6hcrLVYkUwj-k8E'
+	file_name = 'Student Survey (Responces).xls'
+	get_responces_file(drive, file_id, file_name)
+	form_responces_df = read_excel(file_name)
 	return form_responces_df.rename(columns = student_survey_questions_rename_dict)
 
-def create_responces_file(drive: GoogleDrive):
+def get_responces_file(drive: GoogleDrive, file_id: str, file_name: str):
 	# Initialize GoogleDriveFile instance with file id
-	file_obj = drive.CreateFile({'id': '1UvWmhv59BSTwQMBAaKFFiZM6VRmT6hcrLVYkUwj-k8E'})
+	file_obj = drive.CreateFile({'id': file_id})
 	file_obj.GetContentFile(
-		'Student Survey (Responces).xls',
+		file_name,
 		mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 def get_drive_access():
