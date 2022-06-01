@@ -32,13 +32,6 @@ def get_form_responses_df():
 	
 	return form_responces_df.rename(columns = student_survey_questions_rename_dict)
 
-def get_form_responces_excel(drive: GoogleDrive, file_id: str, file_name: str):
-	# Initialize GoogleDriveFile instance with file id
-	file_obj = drive.CreateFile({'id': file_id})
-	file_obj.GetContentFile(
-		file_name,
-		mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-
 def get_drive_access():
 	"""
 	gives access to the system's google drive, returns a GoogleDrive instance
@@ -67,3 +60,10 @@ def get_drive_access():
 	# GoogleDrive Instance is created using authenticated GoogleAuth instance
 	drive = GoogleDrive(gauth)
 	return drive
+
+def get_form_responces_excel(drive: GoogleDrive, file_id: str, file_name: str):
+	# Initialize GoogleDriveFile instance with file id
+	file_obj = drive.CreateFile({'id': file_id})
+	file_obj.GetContentFile(
+		file_name,
+		mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
