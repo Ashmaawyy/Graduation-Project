@@ -6,7 +6,7 @@ from pandas import read_csv, DataFrame
 from os import getcwd
 import smtplib, email, imaplib, traceback#, mysql.connector
 
-admin_creds = read_csv(getcwd() + '/airflow/dags/admin_creds.csv')
+admin_creds = read_csv(getcwd() + '/dags/emails/admin_creds.csv')
 from_addr = admin_creds['value'][0]
 
 def send_email(subject: str, to_addrs: list, message_text: str, files_names: list = None):
@@ -47,7 +47,7 @@ def attach_files(subject: str, to_addrs: list, message_text: str, files_names: l
         message_attached.attach(part)
     return message_attached
 
-def connect_to_ssl_server(to_addrs: list, message: email.mime.message.MIMEMessage):
+def connect_to_ssl_server(to_addrs: list, message):
     """
     Handels e-mail sending protocols
 
@@ -169,5 +169,6 @@ with DAG(dag_id = "emails_handler",
                 'message_text': student_survey_message }
         )
 
-doctor_submission
-student_survey
+#doctor_submission
+#student_survey
+send_email('Testing ssl function argument', ['muhammad.alashmaawy@gmail.com'], student_survey_message)
