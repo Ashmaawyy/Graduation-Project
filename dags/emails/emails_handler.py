@@ -169,6 +169,5 @@ with DAG(dag_id = "emails_handler",
                 'message_text': student_survey_message }
         )
 
-#doctor_submission
-#student_survey
-send_email('Testing ssl function argument', ['muhammad.alashmaawy@gmail.com'], student_survey_message)
+doctor_submission
+student_survey
