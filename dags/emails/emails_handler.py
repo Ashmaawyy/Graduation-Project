@@ -1,4 +1,3 @@
-from email.mime.message import MIMEMessage
 from pathlib import Path
 from airflow import DAG
 from airflow.operators.python import PythonOperator
@@ -48,11 +47,9 @@ def attach_files(subject: str, to_addrs: list, message_text: str, files_names: l
         message_attached.attach(part)
     return message_attached
 
-def connect_to_ssl_server(to_addrs: list, message: MIMEMessage):
+def connect_to_ssl_server(to_addrs: list, message: email.mime.message.MIMEMessage):
     """
     Handels e-mail sending protocols
-    to_addrs -> []
-    message -> MIMEmessage object
 
     """
      # connect with Google's servers
