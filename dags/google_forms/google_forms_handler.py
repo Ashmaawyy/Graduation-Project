@@ -5,7 +5,14 @@ from pandas import read_excel
 
 def get_form_response_df():
 	"""
-	Returns a dataframe with the expected google form responces
+	Returns a dataframe with the expected google form responces.
+	
+	Renaming questions dictionary:
+	'How would you rate the overall learning journey for this course?': 'learning journey',
+	'How would you rate the course content in sight of the current market requirements?': 'course content',
+	'How would you rate the practical implementation of this course contents?': 'practical implementation',
+	'How did this course improve your skill set?': 'skill set improvement',
+	"How many new skills did you acquire during the course's journey?": 'new skills acquired'
 
 	"""
 	student_survey_questions_rename_dict = {
