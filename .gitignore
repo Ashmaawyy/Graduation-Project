@@ -134,4 +134,3 @@ dmypy.json
 *.json
 *.xls
 creds.txt
-*.ipynb
