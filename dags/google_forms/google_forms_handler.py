@@ -28,7 +28,7 @@ def get_form_responses_df():
 	
 	drive = get_drive_access()
 	
-	get_form_responces_excel(drive, file_id, file_name)
+	get_form_responses_excel(drive, file_id, file_name)
 	form_responces_df = read_excel(file_name)
 	
 	return form_responces_df.rename(columns = student_survey_questions_rename_dict)
@@ -62,7 +62,7 @@ def get_drive_access():
 	drive = GoogleDrive(gauth)
 	return drive
 
-def get_form_responces_excel(drive: GoogleDrive, file_id: str, file_name: str):
+def get_form_responses_excel(drive: GoogleDrive, file_id: str, file_name: str):
 	# Initialize GoogleDriveFile instance with file id
 	file_obj = drive.CreateFile({'id': file_id})
 	file_obj.GetContentFile(
