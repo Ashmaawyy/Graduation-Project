@@ -30,6 +30,7 @@ def get_form_responses_df():
 	
 	get_form_responses_excel(drive, file_id, file_name)
 	form_responces_df = read_excel(file_name)
+	print('Form responses saved into a Dataframe successfully : )')
 	
 	return form_responces_df.rename(columns = student_survey_questions_rename_dict)
 
