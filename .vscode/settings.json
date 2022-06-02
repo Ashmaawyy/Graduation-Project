@@ -1,7 +1,8 @@
 {
     "python.analysis.extraPaths": [
         "./dags",
-        "./dags/emails"
+        "./dags/emails",
+        "./dags/google_forms"
     ],
     "workbench.editor.autoLockGroups": {
         "default": true,
