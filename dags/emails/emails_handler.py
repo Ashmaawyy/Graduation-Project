@@ -6,8 +6,10 @@ from pandas import read_csv, DataFrame
 from os import getcwd
 import smtplib, email, imaplib, traceback#, mysql.connector
 
-admin_creds = read_csv(getcwd() + '/dags/emails/admin_creds.csv')
+admin_creds = read_csv(getcwd() + '/airflow/dags/admin_creds.csv')
 from_addr = admin_creds['value'][0]
+
+########################## Sending Emails ########################
 
 def send_email(subject: str, to_addrs: list, message_text: str, files_names: list = None):
     """
@@ -67,10 +69,13 @@ def connect_to_ssl_server(to_addrs: list, message):
     server.sendmail(username, to_addrs, message.as_string())
     server.quit()
 
+########################## Recieving Emails ######################
+
 def recieve_emails_into_df():
     """
     Recieves and saves messages into a pandas dataframe for analysis,
     returns the created df
+
     """
     try:
         mail = connect_to_imap_server()
@@ -87,6 +92,7 @@ def recieve_emails_into_df():
 def connect_to_imap_server():
     """
     Handles recieve protocols, returns mail -> IMAP object
+
     """
     username = admin_creds['value'][0]
     password = admin_creds['value'][1]
@@ -128,6 +134,8 @@ def create_messages_dict(latest_email_id: int, first_email_id: int, mail: imapli
                 messages_dict['from'].append(msg['from'])
                 messages_dict['body'].append(msg.get_payload(decode = True))
     return messages_dict
+
+########################## Airflow for Production ################
 
 teaching_staff_emails = [
     'SEHAM.MOAWAD@eng.modern-academy.edu.eg',
