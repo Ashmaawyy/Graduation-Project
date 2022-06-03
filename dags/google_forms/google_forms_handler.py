@@ -28,7 +28,7 @@ def get_form_responses_df():
 	
 	drive = get_drive_access()
 	
-	get_form_responses_excel(drive, file_id, file_name)
+	download_form_responses_excel(drive, file_id, file_name)
 	form_responces_df = read_excel(file_name)
 	print('Form responses saved into a Dataframe successfully : )')
 	
@@ -63,7 +63,7 @@ def get_drive_access() -> GoogleDrive:
 	drive = GoogleDrive(gauth)
 	return drive
 
-def get_form_responses_excel(drive: GoogleDrive, file_id: str, file_name: str):
+def download_form_responses_excel(drive: GoogleDrive, file_id: str, file_name: str):
 	# Initialize GoogleDriveFile instance with file id
 	file_obj = drive.CreateFile({'id': file_id})
 	file_obj.GetContentFile(
