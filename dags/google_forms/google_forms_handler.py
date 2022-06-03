@@ -34,7 +34,7 @@ def get_form_responses_df():
 	
 	return form_responces_df.rename(columns = student_survey_questions_rename_dict)
 
-def get_drive_access():
+def get_drive_access() -> GoogleDrive:
 	"""
 	gives access to the system's google drive, returns a GoogleDrive instance
 
