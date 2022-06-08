@@ -1,4 +1,13 @@
-# Welcome To Graduation Project : )
+# Welcome To My Graduation Project : )
+
+### *A piece of art for managing quality assurance department in Modern Academy (Data wise of course).*
+
+Technical Tools Used:
+
+- Apache Airflow.
+- SSL Protocols.
+- IMAP Protocols.
+- GoogleDrive API
 
 ## Modules in our ETL
 
