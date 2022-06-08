@@ -156,11 +156,11 @@ student_survey_message = '''This survey is sent to you from the Quality Control 
 
 with DAG(dag_id = "emails_handler",
          start_date = datetime(2022,7,1),
-         schedule_interval = "@yearly",
+         schedule_interval = "0 14 1 7 *",
          catchup = False) as dag:
 
-        doctor_submission = PythonOperator(
-            task_id = "send_submission_email_to_doctors",
+        send_doctor_submission_reminder = PythonOperator(
+            task_id = "send_submission_reminder_email_to_doctors",
             python_callable = send_email,
             op_kwargs = {
                 'subject': "Annual docs subbmission email for the teaching staff",
@@ -168,7 +168,7 @@ with DAG(dag_id = "emails_handler",
                 'message_text': doctor_submission_message }
                 )
 
-        student_survey = PythonOperator(
+        send_student_survey = PythonOperator(
             task_id = 'send_survey_to_students',
             python_callable = send_email,
             op_kwargs = {
@@ -177,5 +177,5 @@ with DAG(dag_id = "emails_handler",
                 'message_text': student_survey_message }
         )
 
-doctor_submission
-student_survey
+# send_doctor_submission_reminder
+send_student_survey
