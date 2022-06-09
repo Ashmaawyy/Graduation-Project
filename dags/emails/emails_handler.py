@@ -135,7 +135,7 @@ def create_messages_dict(latest_email_id: int, first_email_id: int, mail: imapli
                 messages_dict['body'].append(msg.get_payload(decode = True))
     return messages_dict
 
-########################## Airflow for Production ################
+########################## Airflow configuration for Production ################
 
 teaching_staff_emails = [
     'SEHAM.MOAWAD@eng.modern-academy.edu.eg',
