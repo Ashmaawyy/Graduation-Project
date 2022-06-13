@@ -2,7 +2,7 @@
 # pylint: disable=missing-module-docstring
 # pylint: disable=import-error
 # pylint: disable=wildcard-import
-from email_handler import recieve_emails_into_df
+from emails_handler import recieve_emails_into_df
 from html.parser import HTMLParser
 
 messages_df = recieve_emails_into_df()
