@@ -6,7 +6,7 @@ from pandas import read_csv, DataFrame
 from os import getcwd
 import smtplib, email, imaplib, traceback#, mysql.connector
 
-admin_creds = read_csv(getcwd() + '/airflow/dags/admin_creds.csv')
+admin_creds = read_csv(getcwd() + '/admin_creds.csv')
 from_addr = admin_creds['value'][0]
 
 ########################## Sending Emails ########################
