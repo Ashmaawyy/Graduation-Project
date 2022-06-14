@@ -6,7 +6,7 @@ from pandas import read_csv, DataFrame
 from os import getcwd
 import smtplib, email, imaplib, traceback, mysql.connector
 
-admin_creds = read_csv(getcwd() + '/dags/emails/admin_creds.csv')
+admin_creds = read_csv(getcwd() + '/admin_creds.csv')
 from_addr = admin_creds['value'][0]
 
 ########################## Sending Emails ########################
@@ -138,7 +138,8 @@ def create_messages_dict(latest_email_id: int, first_email_id: int, mail: imapli
 def get_emails_from_database(query: str, user: str, password: str):
     
     try:
-        connection = mysql.connector.connect(host = 'localhost',
+        connection = mysql.connector.connect(
+                                            host = 'localhost',
                                             database = 'Graduation_Project',
                                             user = user,
                                             password = password)
@@ -161,9 +162,10 @@ teaching_staff_emails = [
     'SABRY.AMOATY@eng.modern-academy.edu.eg',
     'muhammad.alashmaawy@gmail.com']
 
-#students_emails = [
-#   'al_ashmawy@outlook.com',
-#   'medo333best@gmail.com']
+#students_emails = get_emails_from_database(
+#                                           'SELECT email FROM Students',
+#                                           'ashmawy',
+#                                           'some password')
 
 doctor_submission_message = '''This Message is sent to you by the QC Department to remind you to submit the required docs : )
                                 \nSincerly,\nAshmawy ©'''
@@ -197,5 +199,4 @@ with DAG(dag_id = "emails_handler",
         )
 
 # send_doctor_submission_reminder
-#send_student_survey
-get_emails_from_database('some query', 'some user', 'some password')
+send_student_survey
