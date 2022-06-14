@@ -4,7 +4,7 @@ from airflow.operators.python import PythonOperator
 from datetime import datetime
 from pandas import read_csv, DataFrame
 from os import getcwd
-import smtplib, email, imaplib, traceback#, mysql.connector
+import smtplib, email, imaplib, traceback, mysql.connector
 
 admin_creds = read_csv(getcwd() + '/admin_creds.csv')
 from_addr = admin_creds['value'][0]
@@ -134,6 +134,27 @@ def create_messages_dict(latest_email_id: int, first_email_id: int, mail: imapli
                 messages_dict['from'].append(msg['from'])
                 messages_dict['body'].append(msg.get_payload(decode = True))
     return messages_dict
+
+def get_emails_from_database(query: str, user: str, password: str):
+    
+    try:
+        connection = mysql.connector.connect(host = 'localhost',
+                                            database = 'Graduation_Project',
+                                            user = user,
+                                            password = password)
+
+        mySql_Create_Table_Query = query
+        cursor = connection.cursor()
+        result = cursor.execute(query)
+        return result
+    
+    except mysql.connector.Error as error:
+        print("Failed to create table in MySQL: {}".format(error))
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
 
 ########################## Airflow configuration for Production ################
 
