@@ -137,7 +137,7 @@ def create_messages_dict(latest_email_id: int, first_email_id: int, mail: imapli
 
 ########################## Airflow configuration for Production ################
 
-def get_emails_from_database(query: str, user: str, password: str):
+def fetch_emails_from_database(query: str, user: str, password: str) -> list:
     
     try:
         connection = mysql.connector.connect(
