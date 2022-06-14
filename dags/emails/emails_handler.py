@@ -148,7 +148,7 @@ def get_emails_from_database(query: str, user: str, password: str):
         result = cursor.execute(query)
         cursor.close()
         connection.close()
-        return result
+        return result.fetchall()
     
     except mysql.connector.Error as error:
         print("Failed to connect to MySQL...\nThis is why:\n{}".format(error))
