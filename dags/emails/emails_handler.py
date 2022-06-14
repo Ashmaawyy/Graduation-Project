@@ -135,6 +135,8 @@ def create_messages_dict(latest_email_id: int, first_email_id: int, mail: imapli
                 messages_dict['body'].append(msg.get_payload(decode = True))
     return messages_dict
 
+########################## Airflow configuration for Production ################
+
 def get_emails_from_database(query: str, user: str, password: str):
     
     try:
@@ -153,9 +155,6 @@ def get_emails_from_database(query: str, user: str, password: str):
     except mysql.connector.Error as error:
         print("Failed to connect to MySQL...\nThis is why:\n{}".format(error))
         return None
-
-
-########################## Airflow configuration for Production ################
 
 teaching_staff_emails = [
     'SEHAM.MOAWAD@eng.modern-academy.edu.eg',
