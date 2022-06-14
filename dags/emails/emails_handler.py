@@ -161,7 +161,7 @@ teaching_staff_emails = [
     'SABRY.AMOATY@eng.modern-academy.edu.eg',
     'muhammad.alashmaawy@gmail.com']
 
-#students_emails = get_emails_from_database(
+#students_emails = fetch_emails_from_database(
 #                                           'SELECT email FROM Students',
 #                                           'ashmawy',
 #                                           'some password')
