@@ -6,7 +6,7 @@ from pandas import read_csv, DataFrame
 from os import getcwd
 import smtplib, email, imaplib, traceback, mysql.connector
 
-admin_creds = read_csv(getcwd() + '/admin_creds.csv')
+admin_creds = read_csv(getcwd() + '/dags/emails/admin_creds.csv')
 from_addr = admin_creds['value'][0]
 
 ########################## Sending Emails ########################
@@ -143,18 +143,16 @@ def get_emails_from_database(query: str, user: str, password: str):
                                             user = user,
                                             password = password)
 
-        mySql_Create_Table_Query = query
         cursor = connection.cursor()
         result = cursor.execute(query)
+        cursor.close()
+        connection.close()
         return result
     
     except mysql.connector.Error as error:
-        print("Failed to create table in MySQL: {}".format(error))
+        print("Failed to connect to MySQL...\n\nThis is why:\n\n{}".format(error))
+        return None
 
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
 
 ########################## Airflow configuration for Production ################
 
@@ -199,4 +197,5 @@ with DAG(dag_id = "emails_handler",
         )
 
 # send_doctor_submission_reminder
-send_student_survey
+#send_student_survey
+get_emails_from_database('some query', 'some user', 'some password')
