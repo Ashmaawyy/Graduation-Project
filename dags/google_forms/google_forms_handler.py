@@ -1,12 +1,12 @@
 from os import getcwd
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
-from pandas import read_excel
+from pandas import DataFrame, read_excel
 
 file_id = '1UvWmhv59BSTwQMBAaKFFiZM6VRmT6hcrLVYkUwj-k8E'
 file_name = 'Student Survey (Responces).xls'
 
-def get_form_responses_df():
+def get_form_responses_df() -> DataFrame:
 	"""
 	Returns a dataframe with the expected google form responces.
 	
