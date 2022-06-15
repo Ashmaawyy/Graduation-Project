@@ -71,7 +71,7 @@ def connect_to_ssl_server(to_addrs: list, message):
 
 ########################## Recieving Emails ######################
 
-def recieve_emails_into_df():
+def recieve_emails_into_df() -> DataFrame:
     """
     Recieves and saves messages into a pandas dataframe for analysis,
     returns the created df
@@ -104,7 +104,7 @@ def connect_to_imap_server():
     mail.select('Inbox')
     return mail
 
-def get_email_ids(mail: imaplib.IMAP4_SSL):
+def get_email_ids(mail: imaplib.IMAP4_SSL) -> int:
     """
     Returns e-mail id's to determin lengh of list to search within
 
@@ -117,7 +117,7 @@ def get_email_ids(mail: imaplib.IMAP4_SSL):
 
     return latest_email_id, first_email_id
 
-def create_messages_dict(latest_email_id: int, first_email_id: int, mail: imaplib.IMAP4_SSL):
+def create_messages_dict(latest_email_id: int, first_email_id: int, mail: imaplib.IMAP4_SSL) -> dict:
     """
     Creates messages dictionary in order to be made into a dataframe
 
