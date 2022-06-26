@@ -1,4 +1,4 @@
-# Welcome To My Graduation Project : )
+# Welcome to My Graduation Project : )
 
 ## *A piece of art for managing quality assurance department in Modern Academy (Data wise of course).*
 
