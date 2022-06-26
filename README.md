@@ -4,9 +4,9 @@
 
 Technical Tools Used:
 
-- Apache Airflow.
-- SSL Protocols.
-- IMAP Protocols.
+- Apache Airflow (for production)
+- SSL Protocols
+- IMAP Protocols
 - GoogleDrive API
 
 ## Modules in our ETL
